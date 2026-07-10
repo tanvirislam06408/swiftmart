@@ -1,8 +1,33 @@
 "use client";
 
+import { authClient } from "@/lib/auth-client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi";
+import {
+  BadgeCheckIcon,
+  BellIcon,
+  CreditCardIcon,
+  LogOutIcon,
+} from "lucide-react";
+
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { DropdownMenuAvatar } from "./UserDropDown";
 
 const PUBLIC_ROUTES = [
   { label: "Home", href: "/" },
@@ -12,9 +37,21 @@ const PUBLIC_ROUTES = [
   { label: "Contact", href: "/contact" },
 ];
 
+const getInitials = (name?: string | null) => {
+  if (!name) return "U";
+  return name
+    .split(" ")
+    .map((n) => n[0])
+    .join("")
+    .toUpperCase()
+    .slice(0, 2);
+};
+
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { data: session } = authClient.useSession();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -38,11 +75,21 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const handleSignOut = async () => {
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/login");
+          router.refresh();
+        },
+      },
+    });
+  };
+
   return (
     <header
-      className={`sticky top-0 z-50 w-full bg-white/90 backdrop-blur transition-shadow ${
-        scrolled ? "shadow-md" : ""
-      }`}
+      className={`sticky top-0 z-50 w-full bg-white/90 backdrop-blur transition-shadow ${scrolled ? "shadow-md" : ""
+        }`}
     >
       <nav className="mx-auto flex h-16 container items-center justify-between px-4 sm:px-6 lg:px-8">
 
@@ -106,19 +153,25 @@ export default function Navbar() {
             <FiShoppingCart size={22} />
           </Link>
 
-          <Link
-            href="/login"
-            className="rounded-full px-5 py-2 text-sm font-medium text-[#0E1F2B] hover:bg-gray-100"
-          >
-            Login
-          </Link>
+          {session?.user ? (
+           <DropdownMenuAvatar user={session?.user} />
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="rounded-full px-5 py-2 text-sm font-medium text-[#0E1F2B] hover:bg-gray-100"
+              >
+                Login
+              </Link>
 
-          <Link
-            href="/register"
-            className="rounded-full bg-[#14B8A6] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#0f9488]"
-          >
-            Sign Up
-          </Link>
+              <Link
+                href="/register"
+                className="rounded-full bg-[#14B8A6] px-5 py-2 text-sm font-semibold text-white transition hover:bg-[#0f9488]"
+              >
+                Sign Up
+              </Link>
+            </>
+          )}
 
         </div>
 
@@ -136,7 +189,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {isOpen && (
-        <div className="border-t bg-white px-4 py-5 md:hidden">
+        <div className="border-t bg-white px-4 py-5 md:hidden animate-in fade-in slide-in-from-top-5 duration-200">
 
           <div className="flex flex-col gap-3">
 
@@ -156,26 +209,73 @@ export default function Navbar() {
 
               <Link
                 href="/cart"
-                className="flex items-center justify-center gap-2 rounded-full border py-2"
+                onClick={() => setIsOpen(false)}
+                className="flex items-center justify-center gap-2 rounded-full border py-2 text-gray-700 hover:bg-gray-50"
               >
                 <FiShoppingCart />
                 Cart
               </Link>
 
-              <Link
-                href="/login"
-                className="rounded-full py-2 text-center hover:bg-gray-100"
-              >
-                Login
-              </Link>
+              {session?.user ? (
+                <>
+                  <div className="flex items-center gap-3 px-3 py-2.5 border rounded-xl bg-gray-50 mt-1">
+                    <Avatar>
+                      <AvatarImage
+                        src={session.user.image || undefined}
+                        alt={session.user.name}
+                      />
+                      <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
+                    </Avatar>
+                    <div className="flex flex-col min-w-0">
+                      <span className="text-sm font-semibold text-gray-900 truncate">
+                        {session.user.name}
+                      </span>
+                      <span className="text-xs text-gray-500 truncate">
+                        {session.user.email}
+                      </span>
+                    </div>
+                  </div>
+
+                  <Link
+                    href="/profile"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-2 mt-1"
+                  >
+                    <BadgeCheckIcon className="h-4 w-4 text-gray-500" />
+                    Account
+                  </Link>
+
+                  <button
+                    onClick={() => {
+                      setIsOpen(false);
+                      handleSignOut();
+                    }}
+                    className="rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 flex items-center gap-2 text-left w-full cursor-pointer"
+                  >
+                    <LogOutIcon className="h-4 w-4" />
+                    Sign Out
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full py-2 text-center hover:bg-gray-100 border border-gray-200 text-gray-700"
+                  >
+                    Login
+                  </Link>
 
 
-              <Link
-                href="/register"
-                className="rounded-full bg-[#14B8A6] py-2 text-center text-white"
-              >
-                Sign Up
-              </Link>
+                  <Link
+                    href="/register"
+                    onClick={() => setIsOpen(false)}
+                    className="rounded-full bg-[#14B8A6] py-2 text-center text-white font-semibold"
+                  >
+                    Sign Up
+                  </Link>
+                </>
+              )}
 
             </div>
 

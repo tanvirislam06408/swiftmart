@@ -26,4 +26,21 @@ export const auth = betterAuth({
             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
         },
     },
+
+
+   user: {
+    additionalFields: {
+      role: {
+        type: ["user", "admin"],
+        required: false,
+        defaultValue: "user",
+        input: false, // don't allow user to set role
+      }
+    },
+  },
+
+
+
+
+
 });
