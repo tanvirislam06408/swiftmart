@@ -1,41 +1,62 @@
 "use client";
 
 import { FormEvent, useState } from "react";
+import { signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LoginPage = () => {
-  const [passwordError, setPasswordError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setPasswordError("");
+    setError("");
     const form = e.currentTarget;
     const email = (form.elements.namedItem("email") as HTMLInputElement).value;
     const password = (form.elements.namedItem("password") as HTMLInputElement).value;
 
-    // Password Validation
-    if (password.length < 8) {
-      setPasswordError("Password must be at least 8 characters.");
-      return;
-    }
-    if (!/[A-Z]/.test(password)) {
-      setPasswordError("Password must contain at least one uppercase letter.");
-      return;
-    }
-    if (!/[a-z]/.test(password)) {
-      setPasswordError("Password must contain at least one lowercase letter.");
-      return;
-    }
-    if (!/\d/.test(password)) {
-      setPasswordError("Password must contain at least one number.");
-      return;
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-      setPasswordError("Password must contain at least one special character.");
-      return;
-    }
+    await signIn.email({
+      email,
+      password,
+    }, {
+      onRequest: () => {
+        setLoading(true);
+      },
+      onSuccess: () => {
+        setLoading(false);
+        form.reset();
+        router.push("/");
+        router.refresh();
+      },
+      onError: (ctx) => {
+        setLoading(false);
+        setError(ctx.error.message || "Invalid credentials. Please try again.");
+      }
+    });
+  };
 
-    console.log({ email, password });
-    form.reset();
+  const handleGoogleSignIn = async () => {
+    setError("");
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    }, {
+      onRequest: () => {
+        setLoading(true);
+      },
+      onSuccess: () => {
+        setLoading(false);
+        router.push("/");
+        router.refresh();
+      },
+      onError: (ctx) => {
+        setLoading(false);
+        setError(ctx.error.message || "Google sign-in failed.");
+      }
+    });
   };
 
   return (
@@ -45,6 +66,12 @@ const LoginPage = () => {
         <p className="text-center text-gray-500 mt-2">Login to your account</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          {error && (
+            <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
+              {error}
+            </div>
+          )}
+
           <div>
             <label htmlFor="email" className="mb-2 block text-sm font-medium text-gray-700">Email</label>
             <input
@@ -52,29 +79,49 @@ const LoginPage = () => {
               name="email"
               type="email"
               required
+              disabled={loading}
               placeholder="Enter your email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
+              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-400"
             />
           </div>
 
           <div>
             <label htmlFor="password" className="mb-2 block text-sm font-medium text-gray-700">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              required
-              placeholder="Enter your password"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500"
-            />
-            {passwordError && <p className="mt-2 text-sm text-red-500">{passwordError}</p>}
+            <div className="relative">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                required
+                disabled={loading}
+                placeholder="Enter your password"
+                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-400 pr-10"
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                disabled={loading}
+              >
+                {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
+              </button>
+            </div>
           </div>
 
           <button
             type="submit"
-            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700"
+            disabled={loading}
+            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
           >
-            Login
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Logging in...
+              </span>
+            ) : "Login"}
           </button>
         </form>
 
@@ -86,7 +133,9 @@ const LoginPage = () => {
 
         <button
           type="button"
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition hover:bg-gray-100"
+          onClick={handleGoogleSignIn}
+          disabled={loading}
+          className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
         >
           {/* Google SVG Icon */}
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-5 w-5">

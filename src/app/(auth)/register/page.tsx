@@ -4,6 +4,8 @@ import React, { useState, ChangeEvent, FormEvent } from "react";
 // Importing icons from react-icons
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineCloudUpload } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
+import { signUp, signIn } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 /**
  * Password validation logic
@@ -18,6 +20,15 @@ const validatePassword = (password: string): string[] => {
   return errors;
 };
 
+const fileToBase64 = (file: File): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = (error) => reject(error);
+  });
+};
+
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
     name: "",
@@ -30,6 +41,9 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [loading, setLoading] = useState(false);
+  const [submitError, setSubmitError] = useState("");
+  const router = useRouter();
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
@@ -40,9 +54,10 @@ export default function RegisterPage() {
     }
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     const newErrors: Record<string, string> = {};
+    setSubmitError("");
 
     if (!formData.name) newErrors.name = "Full name is required";
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) newErrors.email = "Valid email is required";
@@ -58,15 +73,57 @@ export default function RegisterPage() {
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
     } else {
-      console.log({
-        name: formData.name,
-        email: formData.email,
-        image: formData.image?.name || null,
-        password: formData.password,
-      });
-      setFormData({ name: "", email: "", password: "", confirmPassword: "", image: null });
       setErrors({});
+      setLoading(true);
+
+      let base64Image: string | undefined = undefined;
+      if (formData.image) {
+        try {
+          base64Image = await fileToBase64(formData.image);
+        } catch (err) {
+          console.error("Failed to convert image to base64:", err);
+        }
+      }
+
+      await signUp.email({
+        email: formData.email,
+        password: formData.password,
+        name: formData.name,
+        image: base64Image,
+      }, {
+        onSuccess: () => {
+          setLoading(false);
+          setFormData({ name: "", email: "", password: "", confirmPassword: "", image: null });
+          router.push("/");
+          router.refresh();
+        },
+        onError: (ctx) => {
+          setLoading(false);
+          setSubmitError(ctx.error.message || "An error occurred during registration.");
+        }
+      });
     }
+  };
+
+  const handleGoogleSignIn = async () => {
+    setSubmitError("");
+    await signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    }, {
+      onRequest: () => {
+        setLoading(true);
+      },
+      onSuccess: () => {
+        setLoading(false);
+        router.push("/");
+        router.refresh();
+      },
+      onError: (ctx) => {
+        setLoading(false);
+        setSubmitError(ctx.error.message || "Google sign-in failed.");
+      }
+    });
   };
 
   return (
@@ -75,14 +132,21 @@ export default function RegisterPage() {
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h2>
         
         <form onSubmit={handleSubmit} className="space-y-4">
+          {submitError && (
+            <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
+              {submitError}
+            </div>
+          )}
+
           <div>
             <label className="block text-sm font-medium text-gray-700">Full Name</label>
             <input
               type="text"
               name="name"
+              disabled={loading}
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-50 disabled:text-gray-400"
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
@@ -92,9 +156,10 @@ export default function RegisterPage() {
             <input
               type="email"
               name="email"
+              disabled={loading}
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-50 disabled:text-gray-400"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
@@ -102,9 +167,9 @@ export default function RegisterPage() {
           <div>
             <label className="block text-sm font-medium text-gray-700">Profile Image (Optional)</label>
             <div className="mt-1 flex items-center gap-4">
-              <label className="cursor-pointer bg-gray-100 hover:bg-gray-200 p-2 rounded-lg flex items-center gap-2 text-sm text-gray-600">
+              <label className={`cursor-pointer bg-gray-100 hover:bg-gray-200 p-2 rounded-lg flex items-center gap-2 text-sm text-gray-600 ${loading ? "pointer-events-none opacity-50" : ""}`}>
                 <AiOutlineCloudUpload size={20} /> Choose File
-                <input type="file" name="image" accept="image/*" className="hidden" onChange={handleInputChange} />
+                <input type="file" name="image" accept="image/*" className="hidden" onChange={handleInputChange} disabled={loading} />
               </label>
               <span className="text-xs text-gray-500 truncate">{formData.image?.name || "No file chosen"}</span>
             </div>
@@ -115,11 +180,12 @@ export default function RegisterPage() {
             <input
               type={showPassword ? "text" : "password"}
               name="password"
+              disabled={loading}
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10 disabled:bg-gray-50 disabled:text-gray-400"
             />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-9 text-gray-500">
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-9 text-gray-500" disabled={loading}>
               {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
             </button>
           </div>
@@ -129,24 +195,41 @@ export default function RegisterPage() {
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="confirmPassword"
+              disabled={loading}
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10"
+              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10 disabled:bg-gray-50 disabled:text-gray-400"
             />
-            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-9 text-gray-500">
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-9 text-gray-500" disabled={loading}>
               {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
             </button>
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
             {errors.confirmPassword && <p className="text-red-500 text-xs mt-1">{errors.confirmPassword}</p>}
           </div>
 
-          <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition">
-            Register
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
+          >
+            {loading ? (
+              <span className="flex items-center gap-2">
+                <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Registering...
+              </span>
+            ) : "Register"}
           </button>
         </form>
 
         <div className="mt-6">
-          <button className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition">
+          <button
+            onClick={handleGoogleSignIn}
+            disabled={loading}
+            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+          >
             <FcGoogle size={20} />
             Sign in with Google
           </button>
