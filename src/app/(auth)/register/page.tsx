@@ -20,14 +20,41 @@ const validatePassword = (password: string): string[] => {
   return errors;
 };
 
-const fileToBase64 = (file: File): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
+
+// upload image
+
+const uploadImage = async (file: File): Promise<string> => {
+  const formData = new FormData();
+
+  formData.append("file", file);
+  formData.append(
+    "upload_preset",
+    process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET!
+  );
+
+  const res = await fetch(
+    `https://api.cloudinary.com/v1_1/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload`,
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+
+  const data = await res.json();
+
+  return data.secure_url;
 };
+
+
+
+// const fileToBase64 = (file: File): Promise<string> => {
+//   return new Promise((resolve, reject) => {
+//     const reader = new FileReader();
+//     reader.readAsDataURL(file);
+//     reader.onload = () => resolve(reader.result as string);
+//     reader.onerror = (error) => reject(error);
+//   });
+// };
 
 export default function RegisterPage() {
   const [formData, setFormData] = useState({
@@ -38,6 +65,7 @@ export default function RegisterPage() {
     image: null as File | null,
   });
 
+  const [preview, setPreview] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -47,8 +75,10 @@ export default function RegisterPage() {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, files } = e.target;
-    if (name === "image" && files) {
-      setFormData((prev) => ({ ...prev, image: files[0] }));
+    if (name === "image" && files && files[0]) {
+      const file = files[0];
+      setFormData((prev) => ({ ...prev, image: file }));
+      setPreview(URL.createObjectURL(file));
     } else {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
@@ -76,12 +106,15 @@ export default function RegisterPage() {
       setErrors({});
       setLoading(true);
 
-      let base64Image: string | undefined = undefined;
+      let imageUrl: string | undefined = undefined;
       if (formData.image) {
         try {
-          base64Image = await fileToBase64(formData.image);
-        } catch (err) {
-          console.error("Failed to convert image to base64:", err);
+          imageUrl = await uploadImage(formData.image);
+        } catch (err: any) {
+          console.error("Cloudinary upload failed:", err);
+          setSubmitError("Failed to upload profile image to Cloudinary. Please try again.");
+          setLoading(false);
+          return;
         }
       }
 
@@ -89,11 +122,12 @@ export default function RegisterPage() {
         email: formData.email,
         password: formData.password,
         name: formData.name,
-        image: base64Image,
+        image: imageUrl,
       }, {
         onSuccess: () => {
           setLoading(false);
           setFormData({ name: "", email: "", password: "", confirmPassword: "", image: null });
+          setPreview(null);
           router.push("/");
           router.refresh();
         },
@@ -130,7 +164,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h2>
-        
+
         <form onSubmit={handleSubmit} className="space-y-4">
           {submitError && (
             <div className="p-3 text-sm text-red-500 bg-red-50 rounded-lg border border-red-200">
@@ -165,14 +199,40 @@ export default function RegisterPage() {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Profile Image (Optional)</label>
-            <div className="mt-1 flex items-center gap-4">
-              <label className={`cursor-pointer bg-gray-100 hover:bg-gray-200 p-2 rounded-lg flex items-center gap-2 text-sm text-gray-600 ${loading ? "pointer-events-none opacity-50" : ""}`}>
-                <AiOutlineCloudUpload size={20} /> Choose File
-                <input type="file" name="image" accept="image/*" className="hidden" onChange={handleInputChange} disabled={loading} />
-              </label>
-              <span className="text-xs text-gray-500 truncate">{formData.image?.name || "No file chosen"}</span>
-            </div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image (Optional)</label>
+            <label className={`flex flex-col items-center justify-center h-40 rounded-xl border-2 border-dashed border-gray-300 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition relative overflow-hidden ${loading ? "pointer-events-none opacity-50" : ""}`}>
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="h-full w-full object-cover"
+                />
+              ) : (
+                <div className="flex flex-col items-center justify-center p-4">
+                  <AiOutlineCloudUpload size={40} className="text-gray-400" />
+                  <p className="mt-2 text-sm text-gray-600">
+                    Click to upload profile image
+                  </p>
+                  <span className="text-xs text-gray-500">
+                    PNG, JPG, JPEG
+                  </span>
+                </div>
+              )}
+
+              <input
+                hidden
+                type="file"
+                accept="image/*"
+                name="image"
+                onChange={handleInputChange}
+                disabled={loading}
+              />
+            </label>
+            {formData.image && (
+              <p className="text-xs text-gray-500 mt-1 text-center truncate">
+                Selected: {formData.image.name}
+              </p>
+            )}
           </div>
 
           <div className="relative">
