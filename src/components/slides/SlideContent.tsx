@@ -9,8 +9,8 @@ export interface SlideContentProps {
   ghost: { label: string; href: string };
   accent: string;
   tagClass: string;
-  illustration: ReactNode;
-  floatClass: string;
+  illustration?: ReactNode;
+  floatClass?: string;
 }
 
 const TRUST_BADGES = [
@@ -93,10 +93,12 @@ export default function SlideContent({
         </div>
       </div>
 
-      {/* ── Illustration column ── */}
-      <div className={`flex flex-1 items-center justify-center ${floatClass}`}>
-        {illustration}
-      </div>
+      {/* ── Illustration column (optional) ── */}
+      {illustration && (
+        <div className={`flex flex-1 items-center justify-center ${floatClass ?? ""}`}>
+          {illustration}
+        </div>
+      )}
     </div>
   );
 }

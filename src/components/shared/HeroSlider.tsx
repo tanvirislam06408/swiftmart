@@ -57,7 +57,7 @@ export default function HeroSlider() {
         .slide-text-cta   { animation: slideUp 0.65s 0.30s    ease forwards; opacity: 0; }
       `}</style>
 
-      <section className="w-full overflow-hidden min-h-screen">
+      <section className="w-full overflow-hidden ">
         <Swiper
           className="hero-swiper"
           modules={[Autoplay, Pagination, EffectFade]}
