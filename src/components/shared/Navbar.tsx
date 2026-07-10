@@ -10,13 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenuAvatar } from "./UserDropDown";
 
 
-const PUBLIC_ROUTES = [
-  { label: "Home", href: "/" },
-  { label: "Explore", href: "/explore" },
-  { label: "Categories", href: "/categories" },
-  { label: "About", href: "/about" },
-  { label: "Contact", href: "/contact" },
-];
+
 
 const getInitials = (name?: string | null) => {
   if (!name) return "U";
@@ -31,8 +25,19 @@ const getInitials = (name?: string | null) => {
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const { data: session } = authClient.useSession();
+  const { data: session } =  authClient.useSession();
   const router = useRouter(); // only used for push after sign-out
+
+  const PUBLIC_ROUTES = [
+  { label: "Home", href: "/" },
+  { label: "Explore", href: "/explore" },
+  { label: "Categories", href: "/categories" },
+  { label: "dashboard", href: `/dashboard/${session?.user?.role}` },
+  { label: "About", href: "/about" },
+];
+
+
+
 
   useEffect(() => {
     const handleScroll = () => {

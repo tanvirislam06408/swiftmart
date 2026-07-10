@@ -1,8 +1,7 @@
 import { Product } from "@/types/product";
 import Image from "next/image";
 import Link from "next/link";
-
-
+import { Star, MapPin, Clock3 } from "lucide-react";
 
 interface ProductCardProps {
   item: Product;
@@ -10,9 +9,9 @@ interface ProductCardProps {
 
 export default function ProductCard({ item }: ProductCardProps) {
   return (
-    <div className="group overflow-hidden rounded-2xl border border-gray-200 bg-white transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
+    <div className="group overflow-hidden border border-[#E7E3D8] bg-white transition-shadow duration-300 hover:shadow-[0_8px_30px_rgba(30,28,22,0.10)]">
       {/* Product Image */}
-      <div className="relative h-72 overflow-hidden">
+      <div className="relative aspect-square overflow-hidden bg-[#F2EFE6]">
         <Image
           src={item.image}
           alt={item.title}
@@ -21,53 +20,60 @@ export default function ProductCard({ item }: ProductCardProps) {
         />
 
         {/* Category */}
-        <span className="absolute left-4 top-4 rounded-full bg-black/80 px-3 py-1 text-xs font-medium text-white">
+        <span className="absolute left-3 top-3 bg-white/90 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#1E1C16]">
           {item.category}
         </span>
 
         {/* Featured Badge */}
         {item.featured && (
-          <span className="absolute right-4 top-4 rounded-full bg-red-500 px-3 py-1 text-xs font-semibold text-white">
+          <span className="absolute right-3 top-3 bg-[#9C7A3C] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-white">
             Featured
           </span>
         )}
       </div>
 
       {/* Content */}
-      <div className="space-y-4 p-5">
-        <div>
-          <h3 className="line-clamp-1 text-lg font-bold text-gray-900">
-            {item.title}
-          </h3>
+      <div className="p-5">
+        <h3 className="line-clamp-1 font-serif text-lg text-[#1E1C16]">
+          {item.title}
+        </h3>
 
-          <p className="mt-2 line-clamp-2 text-sm text-gray-600">
-            {item.shortDescription}
-          </p>
-        </div>
+        <p className="mt-1.5 line-clamp-2 text-[13px] leading-5 text-[#5D594C]">
+          {item.shortDescription}
+        </p>
 
         {/* Product Meta */}
-        <div className="grid grid-cols-2 gap-y-2 text-sm text-gray-500">
-          <span>⭐ {item.rating}</span>
-          <span>📍 {item.location}</span>
-          <span>🚚 {item.duration}</span>
-          <span>📦 {item.availableDate}</span>
+        <div className="mt-4 flex items-center gap-4 text-[12px] text-[#8A8578]">
+          <span className="flex items-center gap-1">
+            <Star size={12} className="fill-[#9C7A3C] text-[#9C7A3C]" />
+            {item.rating}
+          </span>
+          <span className="flex items-center gap-1">
+            <MapPin size={12} />
+            {item.location}
+          </span>
+          <span className="flex items-center gap-1">
+            <Clock3 size={12} />
+            {item.duration}
+          </span>
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between border-t pt-4">
+        <div className="mt-5 flex items-center justify-between border-t border-[#E7E3D8] pt-4">
           <div>
-            <p className="text-xs text-gray-500">Price</p>
-
-            <h4 className="text-2xl font-bold text-gray-900">
+            <p className="text-[10px] uppercase tracking-[0.14em] text-[#8A8578]">
+              Price
+            </p>
+            <p className="font-serif text-xl text-[#1E1C16]">
               ${item.price}
-            </h4>
+            </p>
           </div>
 
           <Link
             href={`/explore/${item._id}`}
-            className="rounded-lg bg-black px-5 py-2 text-sm font-semibold text-white transition hover:bg-gray-800"
+            className="bg-[#1E1C16] px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]"
           >
-            View Details
+            View details
           </Link>
         </div>
       </div>
