@@ -64,7 +64,7 @@ export default function ProductCard({ item }: ProductCardProps) {
           </div>
 
           <Link
-            href={`/products/${item._id}`}
+            href={`/explore/${item._id}`}
             className="rounded-lg bg-black px-5 py-2 text-sm font-semibold text-white transition hover:bg-gray-800"
           >
             View Details
