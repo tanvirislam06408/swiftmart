@@ -29,7 +29,6 @@ const LoginPage = () => {
         setLoading(false);
         form.reset();
         router.push("/");
-        router.refresh();
       },
       onError: (ctx) => {
         setLoading(false);
@@ -50,7 +49,6 @@ const LoginPage = () => {
       onSuccess: () => {
         setLoading(false);
         router.push("/");
-        router.refresh();
       },
       onError: (ctx) => {
         setLoading(false);

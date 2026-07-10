@@ -129,7 +129,6 @@ export default function RegisterPage() {
           setFormData({ name: "", email: "", password: "", confirmPassword: "", image: null });
           setPreview(null);
           router.push("/");
-          router.refresh();
         },
         onError: (ctx) => {
           setLoading(false);
@@ -151,7 +150,6 @@ export default function RegisterPage() {
       onSuccess: () => {
         setLoading(false);
         router.push("/");
-        router.refresh();
       },
       onError: (ctx) => {
         setLoading(false);

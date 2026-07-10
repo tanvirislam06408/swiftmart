@@ -5,29 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi";
-import {
-  BadgeCheckIcon,
-  BellIcon,
-  CreditCardIcon,
-  LogOutIcon,
-} from "lucide-react";
-
-import {
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-} from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { BadgeCheckIcon, LogOutIcon } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenuAvatar } from "./UserDropDown";
+
 
 const PUBLIC_ROUTES = [
   { label: "Home", href: "/" },
@@ -51,7 +32,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const { data: session } = authClient.useSession();
-  const router = useRouter();
+  const router = useRouter(); // only used for push after sign-out
 
   useEffect(() => {
     const handleScroll = () => {
@@ -75,23 +56,25 @@ export default function Navbar() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // ⚠️  Do NOT call router.refresh() here — it re-renders the entire layout
+  //     tree and causes the navbar to visibly flash/remount.
+  //     authClient.useSession() is reactive and updates automatically.
   const handleSignOut = async () => {
     await authClient.signOut({
       fetchOptions: {
         onSuccess: () => {
           router.push("/login");
-          router.refresh();
         },
       },
     });
   };
 
   return (
-    <header
+    <nav
       className={`sticky top-0 z-50 w-full bg-white/90 backdrop-blur transition-shadow ${scrolled ? "shadow-md" : ""
         }`}
     >
-      <nav className="mx-auto flex h-16 container items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-16 container items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2">
@@ -184,7 +167,7 @@ export default function Navbar() {
           {isOpen ? <FiX size={24} /> : <FiMenu size={24} />}
         </button>
 
-      </nav>
+      </div>
 
 
       {/* Mobile Menu */}
@@ -284,6 +267,6 @@ export default function Navbar() {
         </div>
       )}
 
-    </header>
+    </nav>
   );
 }
