@@ -7,15 +7,15 @@ const Featured = async () => {
   const productData = await serverFetch<Product[]>("/products-featured");
 
   return (
-    <section className="py-20">
+    <section className="section-padding">
       <div className="container mx-auto px-4">
-        <div className="mb-10 ">
-          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
-            Featured Tours
+        <div className="mb-12">
+          <span className="section-badge">
+            Featured Products
           </span>
 
-          <h2 className="mt-2 text-4xl font-bold">
-            Explore Our Featured Destinations
+          <h2 className="section-heading mt-3">
+            Explore Our Featured Products
           </h2>
         </div>
 

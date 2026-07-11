@@ -48,6 +48,33 @@
   --radius-4xl: calc(var(--radius) * 2.6);
 }
 
+@layer utilities {
+  .section-padding {
+    @apply py-20;
+  }
+  .section-badge {
+    @apply text-xs font-semibold uppercase tracking-widest text-[#14B8A6];
+  }
+  .section-heading {
+    @apply text-4xl font-bold text-gray-900;
+  }
+  .section-desc {
+    @apply mx-auto mt-4 max-w-2xl text-gray-600;
+  }
+  .card-base {
+    @apply rounded-2xl bg-white shadow-sm border border-gray-100 transition-all duration-300;
+  }
+  .card-hover {
+    @apply hover:-translate-y-1 hover:shadow-xl;
+  }
+  .btn-primary {
+    @apply rounded-full bg-[#14B8A6] px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:bg-[#0f9488] active:scale-[0.97];
+  }
+  .btn-outline {
+    @apply rounded-full border border-gray-200 px-6 py-3 text-sm font-semibold text-gray-700 transition-all duration-300 hover:border-[#14B8A6] hover:text-[#14B8A6] active:scale-[0.97];
+  }
+}
+
 :root {
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);

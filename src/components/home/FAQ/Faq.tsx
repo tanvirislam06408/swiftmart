@@ -27,31 +27,34 @@ const faqs = [
 export default function Faq() {
 
   return (
-   <section className="bg-gray-50 py-20">
+   <section className="bg-gray-50 section-padding">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-14">
+        <div className="mb-14 text-center">
+          <span className="section-badge">
+            FAQ
+          </span>
 
-          <h2 className="mt-3 text-4xl font-bold text-gray-900">
+          <h2 className="section-heading mt-3">
             Frequently Asked Questions
           </h2>
 
-          <p className=" mt-4 max-w-2xl text-gray-600">
+          <p className="section-desc">
             Find answers to the most common questions about shopping,
             payments, shipping, and returns.
           </p>
         </div>
 
-        <div className="divide-y divide-gray-200 rounded-2xl bg-white shadow-sm">
+        <div className="divide-y divide-gray-100 card-base">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className="py-8 px-6 md:grid md:grid-cols-12 md:gap-10 md:px-8"
+              className="px-6 py-8 md:grid md:grid-cols-12 md:gap-10 md:px-8"
             >
               <h3 className="text-lg font-semibold text-gray-900 md:col-span-5">
                 {faq.question}
               </h3>
 
-              <p className="mt-3 text-gray-600 leading-7 md:col-span-7 md:mt-0">
+              <p className="mt-3 leading-7 text-gray-600 md:col-span-7 md:mt-0">
                 {faq.answer}
               </p>
             </div>

@@ -160,7 +160,7 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl p-8">
+      <div className="w-full max-w-md card-base p-8">
         <h2 className="text-2xl font-bold text-gray-900 mb-6 text-center">Create Account</h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -178,7 +178,7 @@ export default function RegisterPage() {
               disabled={loading}
               value={formData.name}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-50 disabled:text-gray-400"
+              className="w-full mt-1 rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400"
             />
             {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
           </div>
@@ -191,14 +191,14 @@ export default function RegisterPage() {
               disabled={loading}
               value={formData.email}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none disabled:bg-gray-50 disabled:text-gray-400"
+              className="w-full mt-1 rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400"
             />
             {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">Profile Image (Optional)</label>
-            <label className={`flex flex-col items-center justify-center h-40 rounded-xl border-2 border-dashed border-gray-300 cursor-pointer hover:border-blue-500 hover:bg-blue-50 transition relative overflow-hidden ${loading ? "pointer-events-none opacity-50" : ""}`}>
+            <label className={`flex flex-col items-center justify-center h-40 rounded-xl border-2 border-dashed border-gray-200 cursor-pointer hover:border-[#14B8A6] hover:bg-[#14B8A6]/5 transition-all duration-300 relative overflow-hidden ${loading ? "pointer-events-none opacity-50" : ""}`}>
               {preview ? (
                 <img
                   src={preview}
@@ -207,11 +207,11 @@ export default function RegisterPage() {
                 />
               ) : (
                 <div className="flex flex-col items-center justify-center p-4">
-                  <AiOutlineCloudUpload size={40} className="text-gray-400" />
-                  <p className="mt-2 text-sm text-gray-600">
+                  <AiOutlineCloudUpload size={40} className="text-gray-300" />
+                  <p className="mt-2 text-sm text-gray-500">
                     Click to upload profile image
                   </p>
-                  <span className="text-xs text-gray-500">
+                  <span className="text-xs text-gray-400">
                     PNG, JPG, JPEG
                   </span>
                 </div>
@@ -241,9 +241,9 @@ export default function RegisterPage() {
               disabled={loading}
               value={formData.password}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10 disabled:bg-gray-50 disabled:text-gray-400"
+              className="w-full mt-1 rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400 pr-12"
             />
-            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-3 top-9 text-gray-500" disabled={loading}>
+            <button type="button" onClick={() => setShowPassword(!showPassword)} className="absolute right-4 top-10 text-gray-400" disabled={loading}>
               {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
             </button>
           </div>
@@ -256,9 +256,9 @@ export default function RegisterPage() {
               disabled={loading}
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none pr-10 disabled:bg-gray-50 disabled:text-gray-400"
+              className="w-full mt-1 rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400 pr-12"
             />
-            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-3 top-9 text-gray-500" disabled={loading}>
+            <button type="button" onClick={() => setShowConfirmPassword(!showConfirmPassword)} className="absolute right-4 top-10 text-gray-400" disabled={loading}>
               {showConfirmPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
             </button>
             {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
@@ -268,7 +268,7 @@ export default function RegisterPage() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
+            className="btn-primary w-full flex items-center justify-center"
           >
             {loading ? (
               <span className="flex items-center gap-2">
@@ -286,15 +286,15 @@ export default function RegisterPage() {
           <button
             onClick={handleGoogleSignIn}
             disabled={loading}
-            className="w-full flex items-center justify-center gap-2 border border-gray-300 py-2 rounded-lg hover:bg-gray-50 transition disabled:opacity-50 disabled:cursor-not-allowed"
+            className="btn-outline w-full flex items-center justify-center gap-2"
           >
             <FcGoogle size={20} />
             Sign in with Google
           </button>
         </div>
 
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Already have an account? <a href="/login" className="text-blue-600 font-semibold hover:underline">Sign In</a>
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Already have an account? <a href="/login" className="font-semibold text-[#14B8A6] hover:underline">Sign In</a>
         </p>
       </div>
     </div>

@@ -33,55 +33,50 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="bg-white py-20">
+    <section className="bg-white section-padding">
       <div className="container mx-auto px-4">
-        {/* Heading */}
         <div className="mb-14 text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
+          <span className="section-badge">
             Testimonials
           </span>
 
-          <h2 className="mt-3 text-4xl font-bold text-gray-900">
+          <h2 className="section-heading mt-3">
             What Our Customers Say
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+          <p className="section-desc">
             Thousands of happy customers trust SwiftMart for quality fashion,
             fast delivery, and exceptional service.
           </p>
         </div>
 
-        {/* Cards */}
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {testimonials.map((item) => (
             <div
               key={item.id}
-              className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              className="card-base card-hover p-8"
             >
-              {/* Rating */}
               <div className="mb-5 flex">
                 {Array.from({ length: item.rating }).map((_, index) => (
                   <Star
                     key={index}
                     size={18}
-                    className="fill-yellow-400 text-yellow-400"
+                    className="fill-[#14B8A6] text-[#14B8A6]"
                   />
                 ))}
               </div>
 
-              {/* Review */}
               <p className="mb-8 leading-7 text-gray-600">
-                "{item.review}"
+                &ldquo;{item.review}&rdquo;
               </p>
 
-              {/* User */}
               <div className="flex items-center gap-4">
                 <Image
                   src={item.image}
                   alt={item.name}
                   width={60}
                   height={60}
-                  className="rounded-full object-cover"
+                  className="rounded-full object-cover ring-2 ring-gray-100"
                 />
 
                 <div>

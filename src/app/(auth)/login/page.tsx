@@ -58,9 +58,9 @@ const LoginPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
-      <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-lg">
-        <h1 className="text-3xl font-bold text-center text-gray-800">Welcome Back</h1>
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4">
+      <div className="w-full max-w-md card-base p-8">
+        <h1 className="text-3xl font-bold text-center text-gray-900">Welcome Back</h1>
         <p className="text-center text-gray-500 mt-2">Login to your account</p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-5">
@@ -79,7 +79,7 @@ const LoginPage = () => {
               required
               disabled={loading}
               placeholder="Enter your email"
-              className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-400"
+              className="w-full rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400"
             />
           </div>
 
@@ -93,12 +93,12 @@ const LoginPage = () => {
                 required
                 disabled={loading}
                 placeholder="Enter your password"
-                className="w-full rounded-lg border border-gray-300 px-4 py-3 outline-none transition focus:border-blue-500 disabled:bg-gray-50 disabled:text-gray-400 pr-10"
+                className="w-full rounded-full border border-gray-200 px-5 py-3 text-sm outline-none transition-all duration-300 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10 disabled:bg-gray-50 disabled:text-gray-400 pr-12"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400"
                 disabled={loading}
               >
                 {showPassword ? <AiOutlineEyeInvisible size={20} /> : <AiOutlineEye size={20} />}
@@ -109,7 +109,7 @@ const LoginPage = () => {
           <button
             type="submit"
             disabled={loading}
-            className="w-full rounded-lg bg-blue-600 py-3 font-semibold text-white transition hover:bg-blue-700 disabled:bg-blue-400 disabled:cursor-not-allowed flex items-center justify-center"
+            className="btn-primary w-full flex items-center justify-center"
           >
             {loading ? (
               <span className="flex items-center gap-2">
@@ -124,18 +124,17 @@ const LoginPage = () => {
         </form>
 
         <div className="my-6 flex items-center">
-          <div className="h-px flex-1 bg-gray-300"></div>
-          <span className="px-4 text-sm text-gray-500">OR</span>
-          <div className="h-px flex-1 bg-gray-300"></div>
+          <div className="h-px flex-1 bg-gray-200"></div>
+          <span className="px-4 text-sm text-gray-400">OR</span>
+          <div className="h-px flex-1 bg-gray-200"></div>
         </div>
 
         <button
           type="button"
           onClick={handleGoogleSignIn}
           disabled={loading}
-          className="flex w-full items-center justify-center gap-3 rounded-lg border border-gray-300 py-3 font-medium text-gray-700 transition hover:bg-gray-100 disabled:opacity-50 disabled:cursor-not-allowed"
+          className="btn-outline w-full flex items-center justify-center gap-3"
         >
-          {/* Google SVG Icon */}
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" className="h-5 w-5">
             <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303C33.659 32.657 29.223 36 24 36c-6.627 0-12-5.373-12-12S17.373 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.277 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/>
             <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.277 4 24 4c-7.682 0-14.318 4.337-17.694 10.691z"/>
@@ -145,10 +144,9 @@ const LoginPage = () => {
           Continue with Google
         </button>
 
-        {/* Register link */}
-        <p className="text-center text-sm text-gray-600 mt-6">
-          Don't have an account?{" "}
-          <a href="/register" className="text-blue-600 font-semibold hover:underline">
+        <p className="text-center text-sm text-gray-500 mt-6">
+          Don&apos;t have an account?{" "}
+          <a href="/register" className="font-semibold text-[#14B8A6] hover:underline">
             Register
           </a>
         </p>

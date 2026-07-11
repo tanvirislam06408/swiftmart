@@ -12,3 +12,4 @@ export interface Product {
   featured: boolean;
   image: string;
 }
+

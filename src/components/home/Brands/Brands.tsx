@@ -40,18 +40,18 @@ const brands = [
 
 const Brands = () => {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-gray-50 section-padding">
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
+          <span className="section-badge">
             Trusted Brands
           </span>
 
-          <h2 className="mt-3 text-4xl font-bold text-gray-900">
+          <h2 className="section-heading mt-3">
             Shop Your Favorite Brands
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+          <p className="section-desc">
             Discover premium fashion from the world's most trusted brands.
           </p>
         </div>
@@ -64,7 +64,7 @@ const Brands = () => {
           {brands.map((brand) => (
             <div
               key={brand.name}
-              className="mx-5 flex h-32 w-52 items-center justify-center rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:shadow-lg"
+              className="card-base card-hover mx-5 flex h-32 w-52 items-center justify-center p-6"
             >
               <Image
                 src={brand.logo}

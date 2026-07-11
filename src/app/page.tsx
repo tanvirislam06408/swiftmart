@@ -5,19 +5,20 @@ import Categories from "@/components/home/Categories/Categories";
 import Testimonials from "@/components/home/Tesimonials/Testimonials";
 import Statistics from "@/components/home/Statistics/Statistics";
 import Brands from "@/components/home/Brands/Brands";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
 import CallToAction from "@/components/shared/CallToAction";
 
 export default function Home() {
   return (
     <div>
       <HeroSlider />
-      <Featured />
-      <Categories/>
-      <Testimonials/>
-      <Statistics/>
-      <Brands/>
-      <CallToAction/>
-      <Faq />
+      <AnimatedSection><Featured /></AnimatedSection>
+      <AnimatedSection><Categories/></AnimatedSection>
+      <AnimatedSection><Testimonials/></AnimatedSection>
+      <AnimatedSection><Statistics/></AnimatedSection>
+      <AnimatedSection><Brands/></AnimatedSection>
+      <AnimatedSection><CallToAction/></AnimatedSection>
+      <AnimatedSection><Faq /></AnimatedSection>
     </div>
   );
 }

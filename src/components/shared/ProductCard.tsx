@@ -9,9 +9,8 @@ interface ProductCardProps {
 
 export default function ProductCard({ item }: ProductCardProps) {
   return (
-    <div className="group overflow-hidden border border-[#E7E3D8] bg-white transition-shadow duration-300 hover:shadow-[0_8px_30px_rgba(30,28,22,0.10)]">
-      {/* Product Image */}
-      <div className="relative aspect-square overflow-hidden bg-[#F2EFE6]">
+    <div className="group card-base card-hover overflow-hidden">
+      <div className="relative aspect-square overflow-hidden bg-gray-100">
         <Image
           src={item.image}
           alt={item.title}
@@ -19,33 +18,29 @@ export default function ProductCard({ item }: ProductCardProps) {
           className="object-cover transition duration-500 group-hover:scale-105"
         />
 
-        {/* Category */}
-        <span className="absolute left-3 top-3 bg-white/90 px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-[#1E1C16]">
+        <span className="absolute left-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-gray-700 shadow-sm">
           {item.category}
         </span>
 
-        {/* Featured Badge */}
         {item.featured && (
-          <span className="absolute right-3 top-3 bg-[#9C7A3C] px-2.5 py-1 text-[10px] uppercase tracking-[0.14em] text-white">
+          <span className="absolute right-3 top-3 rounded-full bg-[#14B8A6] px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm">
             Featured
           </span>
         )}
       </div>
 
-      {/* Content */}
       <div className="p-5">
-        <h3 className="line-clamp-1 font-serif text-lg text-[#1E1C16]">
+        <h3 className="line-clamp-1 text-lg font-bold text-gray-900">
           {item.title}
         </h3>
 
-        <p className="mt-1.5 line-clamp-2 text-[13px] leading-5 text-[#5D594C]">
+        <p className="mt-1.5 line-clamp-2 text-sm leading-5 text-gray-600">
           {item.shortDescription}
         </p>
 
-        {/* Product Meta */}
-        <div className="mt-4 flex items-center gap-4 text-[12px] text-[#8A8578]">
+        <div className="mt-4 flex items-center gap-4 text-xs text-gray-500">
           <span className="flex items-center gap-1">
-            <Star size={12} className="fill-[#9C7A3C] text-[#9C7A3C]" />
+            <Star size={12} className="fill-[#14B8A6] text-[#14B8A6]" />
             {item.rating}
           </span>
           <span className="flex items-center gap-1">
@@ -58,20 +53,19 @@ export default function ProductCard({ item }: ProductCardProps) {
           </span>
         </div>
 
-        {/* Footer */}
-        <div className="mt-5 flex items-center justify-between border-t border-[#E7E3D8] pt-4">
+        <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
           <div>
-            <p className="text-[10px] uppercase tracking-[0.14em] text-[#8A8578]">
+            <p className="text-[10px] font-semibold uppercase tracking-wider text-gray-400">
               Price
             </p>
-            <p className="font-serif text-xl text-[#1E1C16]">
+            <p className="text-xl font-bold text-gray-900">
               ${item.price}
             </p>
           </div>
 
           <Link
             href={`/explore/${item._id}`}
-            className="bg-[#1E1C16] px-4 py-2 text-[11px] uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]"
+            className="rounded-full bg-[#0E1F2B] px-5 py-2 text-xs font-semibold uppercase tracking-wider text-white transition-all duration-300 hover:bg-[#14B8A6]"
           >
             View details
           </Link>

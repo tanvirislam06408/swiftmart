@@ -1,182 +1,100 @@
 import Link from "next/link";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaTwitter,
-  FaYoutube,
-} from "react-icons/fa";
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { FiShoppingBag } from "react-icons/fi";
 
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 text-gray-700">
-      <div className="container mx-auto px-4 py-14">
+    <footer className="bg-[#0E1F2B] text-white">
+      <div className="container mx-auto px-4 py-16">
         <div className="grid gap-10 lg:grid-cols-4">
-
-          {/* Logo */}
           <div>
             <Link href="/" className="flex items-center gap-3">
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#14B8A6] text-white">
                 <FiShoppingBag size={22} />
               </div>
-
-              <span className="text-2xl font-bold">
-                Swift<span className="text-emerald-600">Mart</span>
+              <span className="text-2xl font-bold tracking-tight">
+                Swift<span className="text-[#14B8A6]">Mart</span>
               </span>
             </Link>
-
-            <p className="mt-5 max-w-xs text-sm leading-7 text-gray-600">
-              Your one-stop destination for premium fashion. Shop the latest
-              collections with fast delivery and secure checkout.
+            <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/50">
+              Your one-stop destination for premium fashion. Shop the latest collections with fast delivery and secure checkout.
             </p>
           </div>
 
-          {/* Shop */}
           <div>
-            <h3 className="mb-5 text-lg font-semibold text-gray-900">
-              Shop
-            </h3>
-
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-[#14B8A6]">Shop</h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/explore" className="hover:text-emerald-600">
-                  All Products
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/explore?category=men" className="hover:text-emerald-600">
-                  Men
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/explore?category=women" className="hover:text-emerald-600">
-                  Women
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/explore?category=shoes" className="hover:text-emerald-600">
-                  Shoes
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/explore?category=accessories" className="hover:text-emerald-600">
-                  Accessories
-                </Link>
-              </li>
+              {[
+                { label: "All Products", href: "/explore" },
+                { label: "Men", href: "/explore?category=men" },
+                { label: "Women", href: "/explore?category=women" },
+                { label: "Shoes", href: "/explore?category=shoes" },
+                { label: "Accessories", href: "/explore?category=accessories" },
+              ].map((link,i) => (
+                <li key={i}>
+                  <Link href={link.href} className="text-sm text-white/40 transition-colors duration-200 hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Company */}
           <div>
-            <h3 className="mb-5 text-lg font-semibold text-gray-900">
-              Company
-            </h3>
-
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-[#14B8A6]">Company</h3>
             <ul className="space-y-3">
-              <li>
-                <Link href="/about" className="hover:text-emerald-600">
-                  About Us
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/contact" className="hover:text-emerald-600">
-                  Contact
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/privacy" className="hover:text-emerald-600">
-                  Privacy Policy
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/terms" className="hover:text-emerald-600">
-                  Terms & Conditions
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/faq" className="hover:text-emerald-600">
-                  FAQ
-                </Link>
-              </li>
+              {[
+                { label: "About Us", href: "/about" },
+                { label: "Contact", href: "/contact" },
+                { label: "Privacy Policy", href: "/privacy" },
+                { label: "Terms & Conditions", href: "/terms" },
+                { label: "FAQ", href: "/faq" },
+              ].map((link) => (
+                <li key={link.href}>
+                  <Link href={link.href} className="text-sm text-white/40 transition-colors duration-200 hover:text-white">
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="mb-5 text-lg font-semibold text-gray-900">
-              Contact
-            </h3>
-
-            <p className="text-sm text-gray-600">
-              support@swiftmart.com
-            </p>
-
-            <p className="mt-2 text-sm text-gray-600">
-              +1 (234) 567-890
-            </p>
-
-            <p className="mt-2 text-sm text-gray-600">
-              New York, United States
-            </p>
-
+            <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-[#14B8A6]">Contact</h3>
+            <p className="text-sm text-white/40">support@swiftmart.com</p>
+            <p className="mt-2 text-sm text-white/40">+1 (234) 567-890</p>
+            <p className="mt-2 text-sm text-white/40">New York, United States</p>
             <div className="mt-6 flex gap-3">
-              <a
-                href="#"
-                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
-              >
-                <FaFacebookF />
-              </a>
-
-              <a
-                href="#"
-                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
-              >
-                <FaInstagram />
-              </a>
-
-              <a
-                href="#"
-                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
-              >
-                <FaTwitter />
-              </a>
-
-              <a
-                href="#"
-                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
-              >
-                <FaYoutube />
-              </a>
+              {[
+                { icon: FaFacebookF, href: "#" },
+                { icon: FaInstagram, href: "#" },
+                { icon: FaTwitter, href: "#" },
+                { icon: FaYoutube, href: "#" },
+              ].map(({ icon: Icon, href }) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 hover:border-[#14B8A6]/40 hover:bg-[#14B8A6]/10 hover:text-[#14B8A6]"
+                >
+                  <Icon />
+                </a>
+              ))}
             </div>
           </div>
         </div>
 
-        {/* Bottom */}
-        <div className="mt-12 border-t border-gray-300 pt-6 flex flex-col items-center justify-between gap-4 text-sm text-gray-500 md:flex-row">
-          <p>
-            © {new Date().getFullYear()} SwiftMart. All rights reserved.
-          </p>
-
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/30 md:flex-row">
+          <p>&copy; {new Date().getFullYear()} SwiftMart. All rights reserved.</p>
           <div className="flex gap-5">
-            <Link href="/privacy" className="hover:text-emerald-600">
-              Privacy
-            </Link>
-
-            <Link href="/terms" className="hover:text-emerald-600">
-              Terms
-            </Link>
-
-            <Link href="/contact" className="hover:text-emerald-600">
-              Support
-            </Link>
+            {[
+              { label: "Privacy", href: "/privacy" },
+              { label: "Terms", href: "/terms" },
+              { label: "Support", href: "/contact" },
+            ].map((link) => (
+              <Link key={link.href} href={link.href} className="transition-colors duration-200 hover:text-white">
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

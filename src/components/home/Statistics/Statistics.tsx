@@ -36,25 +36,23 @@ const stats = [
 
 const Statistics = () => {
   return (
-    <section className="bg-emerald-600 py-20">
+    <section className=" section-padding">
       <div className="container mx-auto px-4">
-        {/* Heading */}
         <div className="mb-12 text-center text-white">
-          <span className="text-sm font-semibold uppercase tracking-widest">
+          <span className="section-badge text-white/60">
             Our Impact
           </span>
 
-          <h2 className="mt-3 text-4xl font-bold">
+          <h2 className="section-heading mt-3 text-white">
             Trusted by Thousands of Customers
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-emerald-100">
+          <p className="section-desc text-white/60">
             SwiftMart is committed to providing premium fashion products,
             fast delivery, and an exceptional shopping experience.
           </p>
         </div>
 
-        {/* Statistics */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => {
             const Icon = stat.icon;
@@ -62,9 +60,9 @@ const Statistics = () => {
             return (
               <div
                 key={stat.label}
-                className="rounded-2xl bg-white p-8 text-center shadow-lg transition duration-300 hover:-translate-y-1 hover:shadow-xl"
+                className="card-base card-hover p-8 text-center"
               >
-                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-600">
+                <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#14B8A6]/10 text-[#14B8A6]">
                   <Icon size={30} />
                 </div>
 

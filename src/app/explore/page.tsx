@@ -1,10 +1,13 @@
 import ProductCard from "@/components/shared/ProductCard";
 import { serverFetch } from "@/lib/core/server";
 import { Product } from "@/types/product";
+import { ProductsResponse } from "@/types/ProductsResponse";
 import { Search } from "lucide-react";
 
 const ExplorePage = async () => {
-  const productData = await serverFetch<Product[]>("/products");
+  const productData = await serverFetch<ProductsResponse>("/products");
+
+  
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -61,17 +64,17 @@ const ExplorePage = async () => {
       {/* Result Count */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-sm text-gray-500">
-          Showing{" "}
-          <span className="font-semibold text-black">
-            {productData.length}
-          </span>{" "}
-          products
+           Showing{" "}
+           <span className="font-semibold text-black">
+             {productData.products.length}
+           </span>{" "}
+           products
         </p>
       </div>
 
       {/* Product Grid */}
       <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-        {productData.map((item) => (
+        {productData.products.map((item) => (
           <ProductCard key={item._id} item={item} />
         ))}
       </div>

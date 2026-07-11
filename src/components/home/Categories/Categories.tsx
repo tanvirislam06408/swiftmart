@@ -48,30 +48,25 @@ const categories = [
 
 const Categories = () => {
   return (
-    <section className="bg-gray-50 py-20">
+    <section className="bg-gray-50 section-padding">
       <div className="container mx-auto px-4">
-        {/* Heading */}
-        <div className="mb-12 ">
-          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
+        <div className="mb-12">
+          <span className="section-badge">
             Categories
           </span>
 
-          <h2 className="mt-3 text-4xl font-bold text-gray-900">
+          <h2 className="section-heading mt-3">
             Shop by Category
           </h2>
-
-          
         </div>
 
-        {/* Category Cards */}
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {categories.map((category) => (
             <Link
               key={category.title}
               href={category.href}
-              className="group overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+              className="group card-base card-hover overflow-hidden"
             >
-              {/* Image */}
               <div className="relative h-64 overflow-hidden">
                 <Image
                   src={category.image}
@@ -80,11 +75,9 @@ const Categories = () => {
                   className="object-cover transition duration-500 group-hover:scale-110"
                 />
 
-                {/* Dark Overlay */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
               </div>
 
-              {/* Content */}
               <div className="p-6">
                 <h3 className="text-2xl font-bold text-gray-900">
                   {category.title}
@@ -94,8 +87,8 @@ const Categories = () => {
                   {category.description}
                 </p>
 
-                <span className="mt-5 inline-flex items-center font-semibold text-emerald-600 transition group-hover:translate-x-1">
-                  Explore Collection →
+                <span className="mt-5 inline-flex items-center font-semibold text-[#14B8A6] transition-all duration-300 group-hover:translate-x-1">
+                  Explore Collection &rarr;
                 </span>
               </div>
             </Link>
