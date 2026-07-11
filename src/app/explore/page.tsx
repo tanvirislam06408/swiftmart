@@ -1,5 +1,8 @@
+import CategoryFilter from "@/components/shared/CategoryFilter";
 import ProductCard from "@/components/shared/ProductCard";
 import ProductsPagination from "@/components/shared/ProductsPagination";
+import SearchBar from "@/components/shared/SearchBar";
+import SortFilter from "@/components/shared/SortFilter";
 import { serverFetch } from "@/lib/core/server";
 import { Product } from "@/types/product";
 import { ProductsResponse } from "@/types/ProductsResponse";
@@ -13,21 +16,37 @@ interface ExplorePageProps {
 
 const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
   const params = await searchParams;
-  const search = params?.search;
+
+
   const currentPage = Number(params.page) || 1;
-  const url = search ? `/products?search=${search}` : `/products?page=${currentPage}`
+  const search = params.search?.toString() || "";
+  const category = params.category?.toString() || "";
+  const sort = params.sort?.toString() || "";
 
-  // if (params.sort) {
-  //   url = `/api/products?sort=${params.sort}&page=${currentPage}`
+  const query = new URLSearchParams();
 
+  query.set("page", currentPage.toString());
 
-  // }
+  if (search) {
+    query.set("search", search);
+  }
+
+  if (category) {
+    query.set("category", category);
+  }
+
+  if (sort) {
+    query.set("sort", sort);
+  }
+
+  const url = `/products?${query.toString()}`;
+
 
   const productData = await serverFetch<ProductsResponse>(url);
   console.log(currentPage);
-  
-  
-  const {  totalPages } = productData;
+
+
+  const { totalPages } = productData;
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -44,40 +63,14 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
       {/* Search + Filter + Sort */}
       <div className="mb-8 flex flex-col gap-4 rounded-2xl border bg-white p-5 shadow-sm lg:flex-row lg:items-center lg:justify-between">
         {/* Search */}
-        <div className="relative w-full lg:max-w-md">
-          <Search
-            size={18}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
-          />
-
-          <input
-            type="text"
-            placeholder="Search products..."
-            className="w-full rounded-xl border border-gray-300 py-3 pl-10 pr-4 outline-none transition focus:border-black"
-          />
-        </div>
+        <SearchBar/>
 
         <div className="flex flex-col gap-4 sm:flex-row">
           {/* Category */}
-          <select className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black">
-            <option>All Categories</option>
-            <option>Shirts</option>
-            <option>Jackets</option>
-            <option>Shoes</option>
-            <option>Bags</option>
-            <option>Accessories</option>
-            <option>Watches</option>
-          </select>
+         <CategoryFilter/>
 
           {/* Sort */}
-          <select className="rounded-xl border border-gray-300 px-4 py-3 outline-none focus:border-black">
-            <option>Sort By</option>
-            <option>Newest</option>
-            <option>Price: Low → High</option>
-            <option>Price: High → Low</option>
-            <option>Highest Rated</option>
-            <option>A - Z</option>
-          </select>
+          <SortFilter/>
         </div>
       </div>
 
@@ -100,7 +93,7 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
       </div>
 
       {/* Pagination UI */}
-      <ProductsPagination  currentPage={currentPage} totalPage={totalPages}/>
+      <ProductsPagination currentPage={currentPage} totalPage={totalPages} />
     </div>
   );
 };
