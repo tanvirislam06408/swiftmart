@@ -1,13 +1,33 @@
 import ProductCard from "@/components/shared/ProductCard";
+import ProductsPagination from "@/components/shared/ProductsPagination";
 import { serverFetch } from "@/lib/core/server";
 import { Product } from "@/types/product";
 import { ProductsResponse } from "@/types/ProductsResponse";
 import { Search } from "lucide-react";
 
-const ExplorePage = async () => {
-  const productData = await serverFetch<ProductsResponse>("/products");
 
+interface ExplorePageProps {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+}
+
+
+const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
+  const params = await searchParams;
+  const search = params?.search;
+  const currentPage = Number(params.page) || 1;
+  const url = search ? `/products?search=${search}` : `/products?page=${currentPage}`
+
+  // if (params.sort) {
+  //   url = `/api/products?sort=${params.sort}&page=${currentPage}`
+
+
+  // }
+
+  const productData = await serverFetch<ProductsResponse>(url);
+  console.log(currentPage);
   
+  
+  const {  totalPages } = productData;
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -64,43 +84,23 @@ const ExplorePage = async () => {
       {/* Result Count */}
       <div className="mb-6 flex items-center justify-between">
         <p className="text-sm text-gray-500">
-           Showing{" "}
-           <span className="font-semibold text-black">
-             {productData.products.length}
-           </span>{" "}
-           products
+          Showing{" "}
+          <span className="font-semibold text-black">
+            {productData.products.length}
+          </span>{" "}
+          products
         </p>
       </div>
 
       {/* Product Grid */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 mb-10">
         {productData.products.map((item) => (
           <ProductCard key={item._id} item={item} />
         ))}
       </div>
 
       {/* Pagination UI */}
-      <div className="mt-12 flex items-center justify-center gap-2">
-        <button className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-          Previous
-        </button>
-
-        <button className="rounded-lg bg-black px-4 py-2 text-white">
-          1
-        </button>
-
-        <button className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-          2
-        </button>
-
-        <button className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-          3
-        </button>
-
-        <button className="rounded-lg border px-4 py-2 hover:bg-gray-100">
-          Next
-        </button>
-      </div>
+      <ProductsPagination  currentPage={currentPage} totalPage={totalPages}/>
     </div>
   );
 };

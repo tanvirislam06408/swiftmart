@@ -30,7 +30,7 @@ export default function Footer() {
                 { label: "Women", href: "/explore?category=women" },
                 { label: "Shoes", href: "/explore?category=shoes" },
                 { label: "Accessories", href: "/explore?category=accessories" },
-              ].map((link,i) => (
+              ].map((link, i) => (
                 <li key={i}>
                   <Link href={link.href} className="text-sm text-white/40 transition-colors duration-200 hover:text-white">
                     {link.label}
@@ -70,9 +70,9 @@ export default function Footer() {
                 { icon: FaInstagram, href: "#" },
                 { icon: FaTwitter, href: "#" },
                 { icon: FaYoutube, href: "#" },
-              ].map(({ icon: Icon, href }) => (
+              ].map(({ icon: Icon, href }, i) => (
                 <a
-                  key={href}
+                  key={i}
                   href={href}
                   className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white/40 transition-all duration-300 hover:border-[#14B8A6]/40 hover:bg-[#14B8A6]/10 hover:text-[#14B8A6]"
                 >
