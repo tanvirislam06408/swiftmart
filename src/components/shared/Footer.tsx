@@ -5,165 +5,181 @@ import {
   FaTwitter,
   FaYoutube,
 } from "react-icons/fa";
-import { IoSend } from "react-icons/io5";
+import { FiShoppingBag } from "react-icons/fi";
 
-const shopLinks = [
-  { name: "All Products", href: "/explore" },
-  { name: "Men", href: "/explore?category=men" },
-  { name: "Women", href: "/explore?category=women" },
-  { name: "Shoes", href: "/explore?category=shoes" },
-  { name: "Accessories", href: "/explore?category=accessories" },
-];
-
-const supportLinks = [
-  { name: "About Us", href: "/about" },
-  { name: "Contact", href: "/contact" },
-  { name: "Privacy Policy", href: "/privacy" },
-  { name: "Terms & Conditions", href: "/terms" },
-  { name: "FAQ", href: "/faq" },
-];
-
-const socialLinks = [
-  {
-    icon: FaFacebookF,
-    href: "https://facebook.com",
-  },
-  {
-    icon: FaInstagram,
-    href: "https://instagram.com",
-  },
-  {
-    icon: FaTwitter,
-    href: "https://twitter.com",
-  },
-  {
-    icon: FaYoutube,
-    href: "https://youtube.com",
-  },
-];
-
-const Footer = () => {
+export default function Footer() {
   return (
-    <footer className="mt-20 bg-gray-950 text-gray-300">
-      <div className="container mx-auto px-4 py-16">
-        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-          {/* Brand */}
+    <footer className="bg-gray-100 text-gray-700">
+      <div className="container mx-auto px-4 py-14">
+        <div className="grid gap-10 lg:grid-cols-4">
+
+          {/* Logo */}
           <div>
-            <Link href="/" className="text-3xl font-bold text-white">
-              Swift<span className="text-emerald-500">Mart</span>
+            <Link href="/" className="flex items-center gap-3">
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white">
+                <FiShoppingBag size={22} />
+              </div>
+
+              <span className="text-2xl font-bold">
+                Swift<span className="text-emerald-600">Mart</span>
+              </span>
             </Link>
 
-            <p className="mt-5 leading-7 text-gray-400">
-              Your trusted destination for premium fashion, quality products,
-              and a seamless online shopping experience.
+            <p className="mt-5 max-w-xs text-sm leading-7 text-gray-600">
+              Your one-stop destination for premium fashion. Shop the latest
+              collections with fast delivery and secure checkout.
             </p>
-
-            <div className="mt-6 flex gap-3">
-              {socialLinks.map((social, index) => {
-                const Icon = social.icon;
-
-                return (
-                  <a
-                    key={index}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-900 transition duration-300 hover:bg-emerald-600"
-                  >
-                    <Icon size={18} />
-                  </a>
-                );
-              })}
-            </div>
           </div>
 
           {/* Shop */}
           <div>
-            <h3 className="mb-5 text-xl font-semibold text-white">
+            <h3 className="mb-5 text-lg font-semibold text-gray-900">
               Shop
             </h3>
 
             <ul className="space-y-3">
-              {shopLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="transition hover:text-emerald-500"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/explore" className="hover:text-emerald-600">
+                  All Products
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/explore?category=men" className="hover:text-emerald-600">
+                  Men
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/explore?category=women" className="hover:text-emerald-600">
+                  Women
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/explore?category=shoes" className="hover:text-emerald-600">
+                  Shoes
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/explore?category=accessories" className="hover:text-emerald-600">
+                  Accessories
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Support */}
+          {/* Company */}
           <div>
-            <h3 className="mb-5 text-xl font-semibold text-white">
-              Support
+            <h3 className="mb-5 text-lg font-semibold text-gray-900">
+              Company
             </h3>
 
             <ul className="space-y-3">
-              {supportLinks.map((link) => (
-                <li key={link.name}>
-                  <Link
-                    href={link.href}
-                    className="transition hover:text-emerald-500"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
+              <li>
+                <Link href="/about" className="hover:text-emerald-600">
+                  About Us
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/contact" className="hover:text-emerald-600">
+                  Contact
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/privacy" className="hover:text-emerald-600">
+                  Privacy Policy
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/terms" className="hover:text-emerald-600">
+                  Terms & Conditions
+                </Link>
+              </li>
+
+              <li>
+                <Link href="/faq" className="hover:text-emerald-600">
+                  FAQ
+                </Link>
+              </li>
             </ul>
           </div>
 
-          {/* Newsletter */}
+          {/* Contact */}
           <div>
-            <h3 className="mb-5 text-xl font-semibold text-white">
-              Newsletter
+            <h3 className="mb-5 text-lg font-semibold text-gray-900">
+              Contact
             </h3>
 
-            <p className="mb-5 text-gray-400">
-              Subscribe to receive exclusive deals, new arrivals, and special
-              discounts directly in your inbox.
+            <p className="text-sm text-gray-600">
+              support@swiftmart.com
             </p>
 
-            <form className="space-y-3">
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full rounded-lg border border-gray-700 bg-gray-900 px-4 py-3 text-white outline-none transition focus:border-emerald-500"
-              />
+            <p className="mt-2 text-sm text-gray-600">
+              +1 (234) 567-890
+            </p>
 
-              <button
-                type="submit"
-                className="flex w-full items-center justify-center gap-2 rounded-lg bg-emerald-600 py-3 font-semibold text-white transition hover:bg-emerald-700"
+            <p className="mt-2 text-sm text-gray-600">
+              New York, United States
+            </p>
+
+            <div className="mt-6 flex gap-3">
+              <a
+                href="#"
+                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
               >
-                Subscribe
-                <IoSend size={18} />
-              </button>
-            </form>
+                <FaFacebookF />
+              </a>
+
+              <a
+                href="#"
+                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
+              >
+                <FaInstagram />
+              </a>
+
+              <a
+                href="#"
+                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
+              >
+                <FaTwitter />
+              </a>
+
+              <a
+                href="#"
+                className="rounded-full bg-white p-3 shadow transition hover:bg-emerald-600 hover:text-white"
+              >
+                <FaYoutube />
+              </a>
+            </div>
           </div>
         </div>
 
         {/* Bottom */}
-        <div className="mt-14 border-t border-gray-800 pt-6">
-          <div className="flex flex-col items-center justify-between gap-4 md:flex-row">
-            <p className="text-sm text-gray-500">
-              © {new Date().getFullYear()} SwiftMart. All rights reserved.
-            </p>
+        <div className="mt-12 border-t border-gray-300 pt-6 flex flex-col items-center justify-between gap-4 text-sm text-gray-500 md:flex-row">
+          <p>
+            © {new Date().getFullYear()} SwiftMart. All rights reserved.
+          </p>
 
-            <div className="flex flex-wrap items-center gap-5 text-sm text-gray-500">
-              <span>🔒 Secure Payments</span>
-              <span>🚚 Fast Delivery</span>
-              <span>↩️ Easy Returns</span>
-              <span>⭐ Trusted by Thousands</span>
-            </div>
+          <div className="flex gap-5">
+            <Link href="/privacy" className="hover:text-emerald-600">
+              Privacy
+            </Link>
+
+            <Link href="/terms" className="hover:text-emerald-600">
+              Terms
+            </Link>
+
+            <Link href="/contact" className="hover:text-emerald-600">
+              Support
+            </Link>
           </div>
         </div>
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
