@@ -29,16 +29,13 @@ export default function Faq() {
   return (
    <section className="bg-gray-50 py-20">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="mb-14 text-center">
-          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
-            FAQ
-          </span>
+        <div className="mb-14">
 
           <h2 className="mt-3 text-4xl font-bold text-gray-900">
             Frequently Asked Questions
           </h2>
 
-          <p className="mx-auto mt-4 max-w-2xl text-gray-600">
+          <p className=" mt-4 max-w-2xl text-gray-600">
             Find answers to the most common questions about shopping,
             payments, shipping, and returns.
           </p>

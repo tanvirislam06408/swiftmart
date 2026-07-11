@@ -1,0 +1,109 @@
+import Image from "next/image";
+import Link from "next/link";
+
+const categories = [
+  {
+    title: "Men",
+    description: "Premium clothing and accessories for men.",
+    href: "/explore?category=men",
+    image:
+      "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
+  },
+  {
+    title: "Women",
+    description: "Trendy outfits for every occasion.",
+    href: "/explore?category=women",
+    image:
+      "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80",
+  },
+  {
+    title: "Shoes",
+    description: "Sneakers, boots, sandals and more.",
+    href: "/explore?category=shoes",
+    image:
+      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
+  },
+  {
+    title: "Bags",
+    description: "Travel bags, backpacks & handbags.",
+    href: "/explore?category=bags",
+    image:
+      "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80",
+  },
+  {
+    title: "Accessories",
+    description: "Complete your look with stylish accessories.",
+    href: "/explore?category=accessories",
+    image:
+      "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80",
+  },
+  {
+    title: "Watches",
+    description: "Luxury and everyday watches.",
+    href: "/explore?category=watches",
+    image:
+      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
+  },
+];
+
+const Categories = () => {
+  return (
+    <section className="bg-gray-50 py-20">
+      <div className="container mx-auto px-4">
+        {/* Heading */}
+        <div className="mb-12 ">
+          <span className="text-sm font-semibold uppercase tracking-widest text-emerald-600">
+            Categories
+          </span>
+
+          <h2 className="mt-3 text-4xl font-bold text-gray-900">
+            Shop by Category
+          </h2>
+
+          
+        </div>
+
+        {/* Category Cards */}
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {categories.map((category) => (
+            <Link
+              key={category.title}
+              href={category.href}
+              className="group overflow-hidden rounded-2xl bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            >
+              {/* Image */}
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src={category.image}
+                  alt={category.title}
+                  fill
+                  className="object-cover transition duration-500 group-hover:scale-110"
+                />
+
+                {/* Dark Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+              </div>
+
+              {/* Content */}
+              <div className="p-6">
+                <h3 className="text-2xl font-bold text-gray-900">
+                  {category.title}
+                </h3>
+
+                <p className="mt-2 text-gray-600">
+                  {category.description}
+                </p>
+
+                <span className="mt-5 inline-flex items-center font-semibold text-emerald-600 transition group-hover:translate-x-1">
+                  Explore Collection →
+                </span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default Categories;
