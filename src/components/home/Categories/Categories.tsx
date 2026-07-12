@@ -5,14 +5,14 @@ const categories = [
   {
     title: "Men",
     description: "Premium clothing and accessories for men.",
-    href: "/categories/men",
+    href: "/categories/Men",
     image:
       "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?w=600&q=80",
   },
   {
     title: "Women",
     description: "Trendy outfits for every occasion.",
-    href: "/categories/women",
+    href: "/categories/Women",
     image:
       "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=600&q=80",
   },

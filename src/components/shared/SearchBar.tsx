@@ -12,17 +12,18 @@ const SearchBar = () => {
   const [search, setSearch] = useState(searchParams.get("search") || "");
 
   useEffect(() => {
+    const existingSearch = searchParams.get("search") || "";
+    if (search === existingSearch) return;
+
     const timeout = setTimeout(() => {
       const params = new URLSearchParams(searchParams.toString());
 
       if (search.trim()) {
         params.set("search", search.trim());
       } else {
-        
         params.delete("search");
       }
 
-     
       params.set("page", "1");
 
       router.replace(`${pathname}?${params.toString()}`);

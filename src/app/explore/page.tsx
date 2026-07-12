@@ -94,7 +94,7 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
       </div>
 
       {/* Pagination UI */}
-      <ProductsPagination currentPage={currentPage} totalPage={totalPages} />
+      <ProductsPagination currentPage={currentPage} totalPage={totalPages} searchParams={params} />
     </div>
   );
 };
