@@ -9,14 +9,7 @@ import {
 } from "@/components/ui/select";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-const categories = [
-  "Fashion",
-  "Adventure",
-  "Beach",
-  "Luxury",
-  "Nature",
-  "Cultural",
-];
+const categories = ["Women", "Men", "Shoes", "Bags", "Accessories", "Watches"];
 
 const CategoryFilter = () => {
   const router = useRouter();

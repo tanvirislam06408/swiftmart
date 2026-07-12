@@ -19,28 +19,28 @@ const categories = [
   {
     title: "Shoes",
     description: "Sneakers, boots, sandals and more.",
-    href: "/categories/shoes",
+    href: "/categories/Shoes",
     image:
       "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80",
   },
   {
     title: "Bags",
     description: "Travel bags, backpacks & handbags.",
-    href: "/categories/bags",
+    href: "/categories/Bags",
     image:
       "https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80",
   },
   {
     title: "Accessories",
     description: "Complete your look with stylish accessories.",
-    href: "/categories/accessories",
+    href: "/categories/Accessories",
     image:
       "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600&q=80",
   },
   {
     title: "Watches",
     description: "Luxury and everyday watches.",
-    href: "/categories/watches",
+    href: "/categories/Watches",
     image:
       "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=600&q=80",
   },
