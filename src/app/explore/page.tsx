@@ -41,7 +41,8 @@ const ExplorePage = async ({ searchParams }: ExplorePageProps) => {
 
   const url = `/products?${query.toString()}`;
 
-
+ console.log(url);
+ 
   const productData = await serverFetch<ProductsResponse>(url);
   console.log(currentPage);
 
