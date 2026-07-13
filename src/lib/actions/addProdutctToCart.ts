@@ -1,12 +1,14 @@
-'use server'
-import { serverMutation } from "../core/serverMutation"
+'use server';
 
+import { serverMutation } from "../core/serverMutation";
 
-
-export const addToCart = async (data) => {
-    
-
-    const resData = await serverMutation('/add-to-cart', data)
-    return resData;
-
+type CartPayload = {
+  userId: string;
+  productId: string;
+  [key: string]: unknown;
 }
+
+export const addToCart = async (data: CartPayload) => {
+  const resData = await serverMutation("/add-to-cart", data);
+  return resData;
+};

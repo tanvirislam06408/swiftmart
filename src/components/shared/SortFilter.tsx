@@ -14,13 +14,14 @@ const SortFilter = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const handleSort = (value: string) => {
+  const handleSort = (value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
+    const selectedValue = value ?? "default";
 
-    if (value === "default") {
+    if (selectedValue === "default") {
       params.delete("sort");
     } else {
-      params.set("sort", value);
+      params.set("sort", selectedValue);
     }
 
     params.set("page", "1");

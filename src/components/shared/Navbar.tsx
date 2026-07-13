@@ -29,13 +29,15 @@ export default function Navbar() {
   const { data: session } =  authClient.useSession();
   const router = useRouter(); // only used for push after sign-out
 
+  const role = (session?.user && "role" in session.user ? session.user.role : null) ?? "user";
+
   const PUBLIC_ROUTES = [
-  { label: "Home", href: "/" },
-  { label: "Explore", href: "/explore" },
-  { label: "Categories", href: "/categories" },
-  { label: "dashboard", href: `/dashboard/${session?.user?.role}` },
-  { label: "About", href: "/about" },
-];
+    { label: "Home", href: "/" },
+    { label: "Explore", href: "/explore" },
+    { label: "Categories", href: "/categories" },
+    { label: "dashboard", href: `/dashboard/${role}` },
+    { label: "About", href: "/about" },
+  ];
 
 
 
@@ -104,7 +106,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
 
           <Link
-            href={`/dashboard/${session?.user?.role}/orders`}
+            href={`/dashboard/${role}/orders`}
             className="relative rounded-full p-2 text-[#0E1F2B] hover:bg-gray-100"
           >
             <FiShoppingCart size={22} />
@@ -165,7 +167,7 @@ export default function Navbar() {
             <div className="mt-3 border-t pt-4 flex flex-col gap-3">
 
               <Link
-                href={`/dashboard/${session?.user?.role}/orders`}
+                href={`/dashboard/${role}/orders`}
                 onClick={() => setIsOpen(false)}
                 className="flex items-center justify-center gap-2 rounded-full border py-2 text-gray-700 hover:bg-gray-50"
               >

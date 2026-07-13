@@ -87,13 +87,10 @@ const navItems = {
 
 
 export async function DashboardSidebar() {
+  const user = await getSession();
+  const role = user?.role === "admin" || user?.role === "user" ? user.role : "user";
+  const items = navItems[role];
 
-
-  const user = await getSession()
-  
-  const items = navItems[user?.role] 
-  
-  
   return (
     <Sidebar>
       <SidebarHeader className="p-4">

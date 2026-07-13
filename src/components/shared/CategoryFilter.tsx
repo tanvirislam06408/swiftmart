@@ -16,13 +16,14 @@ const CategoryFilter = () => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  const handleCategory = (value: string) => {
+  const handleCategory = (value: string | null) => {
     const params = new URLSearchParams(searchParams.toString());
+    const selectedValue = value ?? "all";
 
-    if (value === "all") {
+    if (selectedValue === "all") {
       params.delete("category");
     } else {
-      params.set("category", value);
+      params.set("category", selectedValue);
     }
 
     params.set("page", "1");

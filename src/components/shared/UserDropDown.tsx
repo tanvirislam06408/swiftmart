@@ -23,8 +23,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { authClient } from "@/lib/auth-client"
 import Link from "next/link"
-
-
+import type { User as AuthUser } from "@/types/user"
 
 interface User {
   id: string;
@@ -41,6 +40,8 @@ interface UserDropDownProps {
 }
 
 export function DropdownMenuAvatar({ user }: UserDropDownProps) {
+  const role = user && "role" in user ? user.role : "user";
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger render={<Button variant="ghost" size="icon" className="rounded-full"><Avatar>
@@ -49,7 +50,7 @@ export function DropdownMenuAvatar({ user }: UserDropDownProps) {
         </Avatar></Button>} />
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
-          <Link href={`/dashboard/${user?.role}/profile`}>
+          <Link href={`/dashboard/${role}/profile`}>
           <DropdownMenuItem>
             <BadgeCheckIcon />
             profile

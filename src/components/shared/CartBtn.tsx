@@ -1,13 +1,24 @@
 'use client'
 
 import { addToCart } from "@/lib/actions/addProdutctToCart";
-import { Product } from "@/types/product";
+import type { Product } from "@/types/product";
+import type { User } from "@/types/user";
 import toast from "react-hot-toast";
 
-const CartBtn = ({ product, user }) => {
+interface CartBtnProps {
+  product: Product;
+  user?: User;
+}
+
+const CartBtn = ({ product, user }: CartBtnProps) => {
 
     const { _id, ...productData } = product;
     const addProduct = async () => {
+        if (!user?.id) {
+            toast.error("Please log in to add items to your cart");
+            return;
+        }
+
         const pData = {
             userId: user.id,
             productId: _id,
