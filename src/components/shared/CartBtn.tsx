@@ -2,17 +2,28 @@
 
 import { addToCart } from "@/lib/actions/addProdutctToCart";
 import { Product } from "@/types/product";
+import toast from "react-hot-toast";
 
-const CartBtn = ({ product }) => {
-    
-    
+const CartBtn = ({ product, user }) => {
+
+    const { _id, ...productData } = product;
     const addProduct = async () => {
-        const data = await addToCart(product)
-        console.log(data);
+        const pData = {
+            userId: user.id,
+            productId: _id,
+            ...productData
+        }
+        const data = await addToCart(pData)
+        if(data.acknowledged){
+            toast.success(`${product.title} add to card successfully`)
+        }
+        else{
+            toast.error(`${product.title} already in cart`)
+        }
 
     }
     return (
-        <button onClick={ addProduct} className="mt-6 w-full bg-[#1E1C16] py-3.5 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]">
+        <button onClick={addProduct} className="mt-6 w-full bg-[#1E1C16] py-3.5 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]">
             Add to cart
         </button>
     );

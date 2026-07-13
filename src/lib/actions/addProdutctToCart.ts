@@ -3,10 +3,10 @@ import { serverMutation } from "../core/serverMutation"
 
 
 
-export const addToCart = async ( data) => {
-    console.log('data after ',data);
+export const addToCart = async (data) => {
     
+
     const resData = await serverMutation('/add-to-cart', data)
-    console.log(resData);
-    
+    return resData;
+
 }

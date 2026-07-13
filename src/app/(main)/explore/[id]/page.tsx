@@ -5,6 +5,7 @@ import { serverFetch } from "@/lib/core/server";
 import { Product } from "@/types/product";
 import { addToCart } from "@/lib/actions/addProdutctToCart";
 import CartBtn from "@/components/shared/CartBtn";
+import { getSession } from "@/lib/core/session";
 
 interface PageProps {
   params: Promise<{
@@ -17,7 +18,7 @@ const ProductDetails = async ({ params }: PageProps) => {
   const product = await serverFetch<Product>(`/products/${id}`);
   if (!product) return null;
 
-
+  const user=await getSession();
 
 
   return (
@@ -99,7 +100,7 @@ const ProductDetails = async ({ params }: PageProps) => {
                 </span>
               </div>
 
-              <CartBtn product={product}/>
+              <CartBtn user={user} product={product}/>
             </div>
           </div>
         </div>
