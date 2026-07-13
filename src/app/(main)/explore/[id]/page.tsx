@@ -1,7 +1,10 @@
+'use server'
 import Image from "next/image";
 import { Star, MapPin, Clock3 } from "lucide-react";
 import { serverFetch } from "@/lib/core/server";
 import { Product } from "@/types/product";
+import { addToCart } from "@/lib/actions/addProdutctToCart";
+import CartBtn from "@/components/shared/CartBtn";
 
 interface PageProps {
   params: Promise<{
@@ -11,10 +14,11 @@ interface PageProps {
 
 const ProductDetails = async ({ params }: PageProps) => {
   const { id } = await params;
-
   const product = await serverFetch<Product>(`/products/${id}`);
-
   if (!product) return null;
+
+
+
 
   return (
     <section className="min-h-screen bg-[#FAF9F5]">
@@ -95,9 +99,7 @@ const ProductDetails = async ({ params }: PageProps) => {
                 </span>
               </div>
 
-              <button className="mt-6 w-full bg-[#1E1C16] py-3.5 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]">
-                Add to cart
-              </button>
+              <CartBtn product={product}/>
             </div>
           </div>
         </div>

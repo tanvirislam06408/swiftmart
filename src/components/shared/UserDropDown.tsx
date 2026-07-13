@@ -22,6 +22,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { authClient } from "@/lib/auth-client"
+import Link from "next/link"
 
 
 
@@ -48,10 +49,12 @@ export function DropdownMenuAvatar({ user }: UserDropDownProps) {
         </Avatar></Button>} />
       <DropdownMenuContent align="end">
         <DropdownMenuGroup>
+          <Link href={`/dashboard/${user?.role}/profile`}>
           <DropdownMenuItem>
             <BadgeCheckIcon />
             profile
           </DropdownMenuItem>
+          </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={async()=>await authClient.signOut()}>

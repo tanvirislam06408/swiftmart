@@ -8,6 +8,7 @@ import { FiMenu, FiX, FiShoppingCart } from "react-icons/fi";
 import { BadgeCheckIcon, LogOutIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenuAvatar } from "./UserDropDown";
+import Logo from "./Logo";
 
 
 
@@ -82,39 +83,7 @@ export default function Navbar() {
       <div className="mx-auto flex h-16 container items-center justify-between px-4 sm:px-6 lg:px-8">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#0E1F2B]">
-            <svg
-              viewBox="0 0 24 24"
-              className="h-7 w-7"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              {/* Shopping Cart Outline */}
-              <path
-                d="M2 3h3.2l2.4 10.5a1.5 1.5 0 0 0 1.5 1.2h8.8a1.5 1.5 0 0 0 1.5-1.2L21 6H7"
-                stroke="white"
-                strokeWidth="2"
-              />
-              <circle cx="10" cy="19" r="1.5" fill="white" />
-              <circle cx="17" cy="19" r="1.5" fill="white" />
-              {/* Lightning Bolt */}
-              <path
-                d="M13 2.5L9 7.5h3.5L11 12.5l5-5h-3.5z"
-                fill="#14B8A6"
-                stroke="#14B8A6"
-                strokeWidth="1.5"
-              />
-            </svg>
-          </div>
-
-          <span className="text-xl font-bold tracking-tight text-[#0E1F2B]">
-            Swift<span className="text-[#14B8A6]">Mart</span>
-          </span>
-        </Link>
+       <Logo/>
 
 
         {/* Desktop Navigation */}
@@ -135,7 +104,7 @@ export default function Navbar() {
         <div className="hidden md:flex items-center gap-3">
 
           <Link
-            href="/cart"
+            href={`/dashboard/${session?.user?.role}/orders`}
             className="relative rounded-full p-2 text-[#0E1F2B] hover:bg-gray-100"
           >
             <FiShoppingCart size={22} />
@@ -196,7 +165,7 @@ export default function Navbar() {
             <div className="mt-3 border-t pt-4 flex flex-col gap-3">
 
               <Link
-                href="/cart"
+                href={`/dashboard/${session?.user?.role}/orders`}
                 onClick={() => setIsOpen(false)}
                 className="flex items-center justify-center gap-2 rounded-full border py-2 text-gray-700 hover:bg-gray-50"
               >

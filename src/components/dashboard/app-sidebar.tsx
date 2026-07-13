@@ -13,6 +13,7 @@ import {
 import { getSession } from "@/lib/core/session";
 import { DashboardSidebarNavItems } from "./DashboardSidebarNavItems";
 import { redirect } from "next/navigation";
+import Logo from "../shared/Logo";
 // Icon components are resolved inside the client component
 // to avoid passing non-plain objects from a Server Component.
 
@@ -67,21 +68,13 @@ const navItems = {
       path: "/dashboard/admin/products",
       icon: "Package",
     },
-    {
-      name: "Manage Orders",
-      path: "/dashboard/admin/orders",
-      icon: "ShoppingCart",
-    },
+    
     {
       name: "Platform Analytics",
       path: "/dashboard/admin/analytics",
       icon: "BarChart3",
     },
-    {
-      name: "Payment History",
-      path: "/dashboard/admin/payments",
-      icon: "CreditCard",
-    },
+    
     {
       name: "Profile",
       path: "/dashboard/admin/profile",
@@ -104,7 +97,7 @@ export async function DashboardSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <h2 className="text-xl font-bold">hi</h2>
+        <Logo/>
       </SidebarHeader>
 
       <SidebarContent>
