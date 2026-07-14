@@ -9,16 +9,30 @@ import {
     UserCheck,
     Trash2,
     Check,
-    Users
+    Users,
+    AlertTriangle
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types/user";
 import { deleteUsers } from "@/lib/actions/deleteUser";
 import { updateUserStatus } from "@/lib/actions/updateUserStatus";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogMedia,
+    AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 export default function ManageUsersPage({ users }: User) {
     const [searchQuery, setSearchQuery] = useState("");
     const [toastMessage, setToastMessage] = useState<string | null>(null);
+    const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
+    const [userToDelete, setUserToDelete] = useState<{ id: string; name: string } | null>(null);
 
     const showToast = (msg: string) => {
         setToastMessage(msg);
@@ -30,26 +44,29 @@ export default function ManageUsersPage({ users }: User) {
     const handleBlockUser = async(id: string) => {
          const result=await updateUserStatus('blocked',id)
         console.log(result);
-           
-      
     };
 
     const handleUnblockUser = async(id: string) => {
         const result=await updateUserStatus('active',id)
         console.log(result);
-        
     };
 
-    const handleDeleteUser = async (id: string) => {
-        const confirmed = window.confirm("Are you sure you want to delete this user? This action cannot be undone.");
-        if (!confirmed) return;
+    const openDeleteDialog = (id: string, name: string) => {
+        setUserToDelete({ id, name });
+        setDeleteDialogOpen(true);
+    };
 
-        const result = await deleteUsers(id);
+    const confirmDeleteUser = async () => {
+        if (!userToDelete) return;
+
+        const result = await deleteUsers(userToDelete.id);
         if (result.deletedCount > 0) {
             showToast(`User has been removed.`);
         } else {
             showToast(`Something went wrong!!`);
         }
+        setDeleteDialogOpen(false);
+        setUserToDelete(null);
     };
 
     return (
@@ -179,7 +196,7 @@ export default function ManageUsersPage({ users }: User) {
                                                     </button>
                                                 )}
                                                 <button
-                                                    onClick={() => handleDeleteUser(user._id)}
+                                                    onClick={() => openDeleteDialog(user._id, user.name)}
                                                     className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl border border-transparent hover:border-red-100 transition cursor-pointer"
                                                     title="Delete User"
                                                 >
@@ -194,6 +211,31 @@ export default function ManageUsersPage({ users }: User) {
                     </div>
                 </div>
             )}
+            {/* Delete Confirmation Dialog */}
+            <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogMedia>
+                            <AlertTriangle className="text-red-500" />
+                        </AlertDialogMedia>
+                        <AlertDialogTitle>Delete User</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Are you sure you want to delete <strong>{userToDelete?.name}</strong>? This action cannot be undone.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel onClick={() => setUserToDelete(null)}>
+                            Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                            onClick={confirmDeleteUser}
+                            className="bg-red-600 text-white hover:bg-red-700"
+                        >
+                            Delete
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
         </div>
     );
 }

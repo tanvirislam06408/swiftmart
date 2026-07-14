@@ -4,8 +4,8 @@ import { getSession } from '@/lib/core/session';
 import type { User } from '@/types/user';
 
 const OrdersPage = async () => {
-  const cartP = (await cartData()) as CartItem[];
   const user = (await getSession()) as User | undefined;
+  const cartP = (await cartData(user?.id)) as CartItem[];
 
   return <CartOrdersPage user={user} cartP={cartP} />;
 };

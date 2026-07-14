@@ -189,7 +189,7 @@ export default function CartOrdersPage({ cartP : cart , user }: { cartP: CartIte
             </p>
           </div>
           <Link
-            href="/dashboard/user/products"
+            href="/explore"
             className="btn-primary inline-block text-xs font-bold"
           >
             Explore Experiences
