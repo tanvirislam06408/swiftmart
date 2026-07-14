@@ -26,10 +26,10 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "All Products", href: "/explore" },
-                { label: "Men", href: "/explore?category=men" },
-                { label: "Women", href: "/explore?category=women" },
-                { label: "Shoes", href: "/explore?category=shoes" },
-                { label: "Accessories", href: "/explore?category=accessories" },
+                { label: "Men", href: "/explore?category=Men" },
+                { label: "Women", href: "/explore?category=Women" },
+                { label: "Shoes", href: "/explore?category=Shoes" },
+                { label: "Accessories", href: "/explore?category=Accessories" },
               ].map((link, i) => (
                 <li key={i}>
                   <Link href={link.href} className="text-sm text-white/40 transition-colors duration-200 hover:text-white">
