@@ -45,10 +45,7 @@ export default function Footer() {
             <ul className="space-y-3">
               {[
                 { label: "About Us", href: "/about" },
-                { label: "Contact", href: "/contact" },
-                { label: "Privacy Policy", href: "/privacy" },
-                { label: "Terms & Conditions", href: "/terms" },
-                { label: "FAQ", href: "/faq" },
+                { label: "Categories", href: "/categories" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm text-white/40 transition-colors duration-200 hover:text-white">
@@ -62,8 +59,8 @@ export default function Footer() {
           <div>
             <h3 className="mb-5 text-sm font-semibold uppercase tracking-widest text-[#14B8A6]">Contact</h3>
             <p className="text-sm text-white/40">support@swiftmart.com</p>
-            <p className="mt-2 text-sm text-white/40">+1 (234) 567-890</p>
-            <p className="mt-2 text-sm text-white/40">New York, United States</p>
+            <p className="mt-2 text-sm text-white/40">+880 1XXXXXXXXX</p>
+            <p className="mt-2 text-sm text-white/40">Dhaka, Bangladesh</p>
             <div className="mt-6 flex gap-3">
               {[
                 { icon: FaFacebookF, href: "#" },
@@ -85,17 +82,6 @@ export default function Footer() {
 
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-white/10 pt-6 text-sm text-white/30 md:flex-row">
           <p>&copy; {new Date().getFullYear()} SwiftMart. All rights reserved.</p>
-          <div className="flex gap-5">
-            {[
-              { label: "Privacy", href: "/privacy" },
-              { label: "Terms", href: "/terms" },
-              { label: "Support", href: "/contact" },
-            ].map((link) => (
-              <Link key={link.href} href={link.href} className="transition-colors duration-200 hover:text-white">
-                {link.label}
-              </Link>
-            ))}
-          </div>
         </div>
       </div>
     </footer>
