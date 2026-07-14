@@ -8,25 +8,17 @@ import {
     UserX,
     UserCheck,
     Trash2,
-    ShieldAlert,
-    RotateCcw,
     Check,
     Users
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types/user";
 import { deleteUsers } from "@/lib/actions/deleteUser";
-
-
-
+import { updateUserStatus } from "@/lib/actions/updateUserStatus";
 
 export default function ManageUsersPage({ users }: User) {
-  
     const [searchQuery, setSearchQuery] = useState("");
-
-    // Undo/Toast state
     const [toastMessage, setToastMessage] = useState<string | null>(null);
-    const [lastAction, setLastAction] = useState<{ type: "delete"; user: User } | null>(null);
 
     const showToast = (msg: string) => {
         setToastMessage(msg);
@@ -35,46 +27,30 @@ export default function ManageUsersPage({ users }: User) {
         }, 3000);
     };
 
-    const handleBlockUser = (id: string) => {
-        setUsers(prev => prev.map(user => {
-            if (user.id === id) {
-                showToast(`User '${user.name}' has been blocked.`);
-                return { ...user, status: "blocked" };
-            }
-            return user;
-        }));
+    const handleBlockUser = async(id: string) => {
+         const result=await updateUserStatus('blocked',id)
+        console.log(result);
+           
+      
     };
 
-    const handleUnblockUser = (id: string) => {
-        setUsers(prev => prev.map(user => {
-            if (user.id === id) {
-                showToast(`User '${user.name}' has been unblocked.`);
-                return { ...user, status: "active" };
-            }
-            return user;
-        }));
+    const handleUnblockUser = async(id: string) => {
+        const result=await updateUserStatus('active',id)
+        console.log(result);
+        
     };
 
-    const handleDeleteUser = async(id: string) => {
-       const result=await deleteUsers(id);
-       if(result.deletedCount > 0){
+    const handleDeleteUser = async (id: string) => {
+        const confirmed = window.confirm("Are you sure you want to delete this user? This action cannot be undone.");
+        if (!confirmed) return;
 
-           showToast(`User  has been removed.`);
-       }
-       else{
-        showToast(`Something wrong !!`);
-       }
-       
-    };
-
-    const handleUndo = () => {
-        if (lastAction && lastAction.type === "delete") {
-            setUsers(prev => [...prev, lastAction.user]);
-            setLastAction(null);
-            showToast("Account removal undone.");
+        const result = await deleteUsers(id);
+        if (result.deletedCount > 0) {
+            showToast(`User has been removed.`);
+        } else {
+            showToast(`Something went wrong!!`);
         }
     };
-
 
     return (
         <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
@@ -86,14 +62,6 @@ export default function ManageUsersPage({ users }: User) {
                         <Check size={12} strokeWidth={3} />
                     </div>
                     <span className="font-medium">{toastMessage}</span>
-                    {lastAction && (
-                        <button
-                            onClick={handleUndo}
-                            className="ml-2 flex items-center gap-1 text-xs font-bold text-teal-300 hover:text-teal-200 cursor-pointer"
-                        >
-                            <RotateCcw size={12} /> Undo
-                        </button>
-                    )}
                 </div>
             )}
 
@@ -197,14 +165,14 @@ export default function ManageUsersPage({ users }: User) {
                                             <div className="flex items-center justify-end gap-2">
                                                 {user.status === "active" ? (
                                                     <button
-                                                        onClick={() => handleBlockUser(user.id)}
+                                                        onClick={() => handleBlockUser(user._id)}
                                                         className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-red-200 text-[10px] font-bold text-red-600 hover:bg-red-50 transition cursor-pointer"
                                                     >
                                                         <UserX size={12} /> Block
                                                     </button>
                                                 ) : (
                                                     <button
-                                                        onClick={() => handleUnblockUser(user.id)}
+                                                        onClick={() => handleUnblockUser(user._id)}
                                                         className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-emerald-200 text-[10px] font-bold text-emerald-600 hover:bg-emerald-50 transition cursor-pointer"
                                                     >
                                                         <UserCheck size={12} /> Unblock
