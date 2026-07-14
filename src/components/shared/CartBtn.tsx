@@ -34,7 +34,7 @@ const CartBtn = ({ product, user }: CartBtnProps) => {
 
     }
     return (
-        <button onClick={addProduct} className="mt-6 w-full bg-[#1E1C16] py-3.5 text-sm uppercase tracking-[0.12em] text-white transition-colors hover:bg-[#9C7A3C]">
+        <button onClick={addProduct} className="btn-primary mt-6 w-full">
             Add to cart
         </button>
     );

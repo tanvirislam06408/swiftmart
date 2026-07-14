@@ -1,4 +1,15 @@
 import type { Metadata } from "next";
+import {
+  Truck,
+  ShieldCheck,
+  BadgeDollarSign,
+  Users,
+  ShoppingBag,
+  Clock,
+  Star,
+} from "lucide-react";
+import { AnimatedSection } from "@/components/shared/AnimatedSection";
+import CallToAction from "@/components/shared/CallToAction";
 
 export const metadata: Metadata = {
   title: "About — SwiftMart",
@@ -8,17 +19,17 @@ export const metadata: Metadata = {
 
 const principles = [
   {
-    label: "01",
-    title: "Speed is a feature, not a slogan",
-    body: "Every listing on SwiftMart carries a real delivery window, calculated from actual carrier data — not a hopeful estimate.",
+    icon: Truck,
+    title: "Speed is a feature",
+    body: "Every listing carries a real delivery window, calculated from actual carrier data — not a hopeful estimate.",
   },
   {
-    label: "02",
+    icon: ShieldCheck,
     title: "Sellers earn their shelf space",
     body: "We audit fulfilment times and return rates continuously. Sellers who can't keep pace lose visibility, automatically.",
   },
   {
-    label: "03",
+    icon: BadgeDollarSign,
     title: "Prices stay honest",
     body: "No inflate-then-discount pricing. The number you see a week before a sale is the number you see during it.",
   },
@@ -32,115 +43,136 @@ const timeline = [
 ];
 
 const stats = [
-  { value: "1.2M+", label: "Orders delivered on time" },
-  { value: "48hrs", label: "Average delivery window" },
-  { value: "6,400", label: "Verified sellers" },
-  { value: "4.8/5", label: "Average buyer rating" },
+  { icon: ShoppingBag, value: "20,000+", label: "Happy Customers" },
+  { icon: Users, value: "5,000+", label: "Products Available" },
+  { icon: Star, value: "150+", label: "Trusted Brands" },
+  { icon: Clock, value: "99%", label: "Customer Satisfaction" },
 ];
 
 const AboutPage = () => {
   return (
-    <main className="bg-[#FAF9F5]">
+    <div>
       {/* Hero */}
-      <section className="border-b border-[#E7E3D8]">
-        <div className="container mx-auto px-4 py-20 sm:px-6 lg:py-28">
-          <span className="text-[11px] uppercase tracking-[0.22em] text-[#9C7A3C]">
-            About SwiftMart
-          </span>
+      <AnimatedSection>
+        <section className="section-padding">
+          <div className="container mx-auto px-4 text-center">
+            <span className="section-badge">About SwiftMart</span>
 
-          <h1 className="mt-4 max-w-3xl font-serif text-[2.75rem] leading-[1.08] tracking-tight text-[#1E1C16] sm:text-6xl">
-            We built a marketplace around the one thing shoppers actually
-            wait for.
-          </h1>
+            <h1 className="section-heading mt-4 text-5xl lg:text-6xl">
+              We built a marketplace around the one thing shoppers actually
+              wait for.
+            </h1>
 
-          <p className="mt-6 max-w-xl text-[15px] leading-7 text-[#5D594C]">
-            SwiftMart started from a simple complaint: &ldquo;in stock&rdquo;
-            rarely meant in stock, and &ldquo;2-day shipping&rdquo; rarely
-            meant two days. So we rebuilt the promise from the ground up —
-            every seller, every listing, every delivery window, held to
-            what it actually says.
-          </p>
-        </div>
-      </section>
+            <p className="section-desc text-lg">
+              SwiftMart started from a simple complaint: &ldquo;in stock&rdquo;
+              rarely meant in stock, and &ldquo;2-day shipping&rdquo; rarely
+              meant two days. So we rebuilt the promise from the ground up —
+              every seller, every listing, every delivery window, held to
+              what it actually says.
+            </p>
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Stats */}
-      <section className="border-b border-[#E7E3D8]">
-        <div className="container mx-auto grid grid-cols-2 divide-x divide-y divide-[#E7E3D8] px-4 sm:px-6 lg:grid-cols-4 lg:divide-y-0">
-          {stats.map((stat) => (
-            <div key={stat.label} className="px-6 py-10 first:pl-0">
-              <div className="font-serif text-3xl text-[#1E1C16] sm:text-4xl">
-                {stat.value}
-              </div>
-              <div className="mt-2 text-sm text-[#8A8578]">{stat.label}</div>
+      <AnimatedSection>
+        <section className="bg-gray-50 section-padding">
+          <div className="container mx-auto px-4">
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+              {stats.map((stat) => {
+                const Icon = stat.icon;
+                return (
+                  <div key={stat.label} className="card-base card-hover p-8 text-center">
+                    <div className="mx-auto mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#14B8A6]/10 text-[#14B8A6]">
+                      <Icon size={30} />
+                    </div>
+                    <h3 className="text-4xl font-bold text-gray-900">{stat.value}</h3>
+                    <p className="mt-2 text-gray-600">{stat.label}</p>
+                  </div>
+                );
+              })}
             </div>
-          ))}
-        </div>
-      </section>
+          </div>
+        </section>
+      </AnimatedSection>
 
       {/* Principles */}
-      <section className="border-b border-[#E7E3D8] py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <div className="grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">
-            <h2 className="font-serif text-2xl text-[#1E1C16]">
-              What we hold sellers to
-            </h2>
+      <AnimatedSection>
+        <section className="section-padding">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center">
+              <span className="section-badge">Our Principles</span>
+              <h2 className="section-heading mt-3">
+                What we hold sellers to
+              </h2>
+              <p className="section-desc">
+                Every seller on SwiftMart is measured against these standards — no exceptions.
+              </p>
+            </div>
 
-            <div className="max-w-2xl divide-y divide-[#E7E3D8] border-y border-[#E7E3D8]">
-              {principles.map((p) => (
-                <div key={p.label} className="flex gap-6 py-7">
-                  <span className="font-serif text-lg text-[#9C7A3C]">
-                    {p.label}
-                  </span>
-                  <div>
-                    <h3 className="text-[15px] font-medium text-[#1E1C16]">
-                      {p.title}
-                    </h3>
-                    <p className="mt-1.5 text-[14px] leading-6 text-[#5D594C]">
-                      {p.body}
-                    </p>
+            <div className="grid gap-6 md:grid-cols-3">
+              {principles.map((p) => {
+                const Icon = p.icon;
+                return (
+                  <div key={p.title} className="card-base card-hover p-8">
+                    <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-full bg-[#14B8A6]/10 text-[#14B8A6]">
+                      <Icon size={26} />
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900">{p.title}</h3>
+                    <p className="mt-3 text-gray-600 leading-relaxed">{p.body}</p>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
-      {/* Order timeline — the "Swift" signature moment */}
-      <section className="border-b border-[#E7E3D8] py-20">
-        <div className="container mx-auto px-4 sm:px-6">
-          <h2 className="font-serif text-2xl text-[#1E1C16]">
-            From order to doorstep
-          </h2>
-          <p className="mt-2 max-w-md text-[14px] leading-6 text-[#8A8578]">
-            A typical SwiftMart order, timestamped the way our tracking
-            actually shows it to you.
-          </p>
+      {/* Order timeline */}
+      <AnimatedSection>
+        <section className="bg-gray-50 section-padding">
+          <div className="container mx-auto px-4">
+            <div className="mb-12 text-center">
+              <span className="section-badge">How It Works</span>
+              <h2 className="section-heading mt-3">
+                From order to doorstep
+              </h2>
+              <p className="section-desc">
+                A typical SwiftMart order, timestamped the way our tracking
+                actually shows it to you.
+              </p>
+            </div>
 
-          <div className="relative mt-12">
-            <div className="absolute left-0 right-0 top-[7px] hidden h-px bg-[#E7E3D8] sm:block" />
-            <div className="grid gap-10 sm:grid-cols-4 sm:gap-6">
-              {timeline.map((stop) => (
-                <div key={stop.step} className="relative">
-                  <span className="relative z-10 block h-3.5 w-3.5 rounded-full border-2 border-[#9C7A3C] bg-[#FAF9F5]" />
-                  <div className="mt-4 text-[11px] uppercase tracking-[0.14em] text-[#9C7A3C]">
-                    {stop.time}
+            <div className="relative mx-auto max-w-4xl">
+              <div className="absolute left-[19px] top-0 bottom-0 hidden w-0.5 bg-[#14B8A6]/20 sm:block" />
+              <div className="grid gap-10 sm:gap-8">
+                {timeline.map((stop) => (
+                  <div key={stop.step} className="flex items-start gap-6 sm:gap-8">
+                    <div className="relative z-10 flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#14B8A6] text-sm font-bold text-white shadow-lg shadow-[#14B8A6]/25">
+                      {stop.time.replace("T+", "")}
+                    </div>
+                    <div className="card-base card-hover flex-1 p-6">
+                      <div className="text-xs font-semibold uppercase tracking-widest text-[#14B8A6]">
+                        {stop.time}
+                      </div>
+                      <h3 className="mt-1 text-lg font-bold text-gray-900">
+                        {stop.step}
+                      </h3>
+                      <p className="mt-1 text-gray-600">
+                        {stop.detail}
+                      </p>
+                    </div>
                   </div>
-                  <div className="mt-1 text-[15px] font-medium text-[#1E1C16]">
-                    {stop.step}
-                  </div>
-                  <p className="mt-1 text-[13px] leading-5 text-[#5D594C]">
-                    {stop.detail}
-                  </p>
-                </div>
-              ))}
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </AnimatedSection>
 
-     
-    </main>
+      {/* CTA */}
+      <CallToAction />
+    </div>
   );
 };
 
