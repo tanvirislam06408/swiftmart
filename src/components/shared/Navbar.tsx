@@ -9,6 +9,7 @@ import { BadgeCheckIcon, LogOutIcon } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { DropdownMenuAvatar } from "./UserDropDown";
 import Logo from "./Logo";
+import UserAvater from "./UserAvater";
 
 
 
@@ -177,43 +178,7 @@ export default function Navbar() {
 
               {session?.user ? (
                 <>
-                  <div className="flex items-center gap-3 px-3 py-2.5 border rounded-xl bg-gray-50 mt-1">
-                    <Avatar>
-                      <AvatarImage
-                        src={session.user.image || undefined}
-                        alt={session.user.name}
-                      />
-                      <AvatarFallback>{getInitials(session.user.name)}</AvatarFallback>
-                    </Avatar>
-                    <div className="flex flex-col min-w-0">
-                      <span className="text-sm font-semibold text-gray-900 truncate">
-                        {session.user.name}
-                      </span>
-                      <span className="text-xs text-gray-500 truncate">
-                        {session.user.email}
-                      </span>
-                    </div>
-                  </div>
-
-                  <Link
-                    href="/profile"
-                    onClick={() => setIsOpen(false)}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-100 flex items-center gap-2 mt-1"
-                  >
-                    <BadgeCheckIcon className="h-4 w-4 text-gray-500" />
-                    Account
-                  </Link>
-
-                  <button
-                    onClick={() => {
-                      setIsOpen(false);
-                      handleSignOut();
-                    }}
-                    className="rounded-lg px-3 py-2 text-sm font-medium text-red-600 hover:bg-red-50 flex items-center gap-2 text-left w-full cursor-pointer"
-                  >
-                    <LogOutIcon className="h-4 w-4" />
-                    Sign Out
-                  </button>
+                  <UserAvater user={session.user}/>
                 </>
               ) : (
                 <>

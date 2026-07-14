@@ -2,21 +2,11 @@
 import { DashboardSidebar } from "@/components/dashboard/app-sidebar"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { getSession } from "@/lib/core/session";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-
-const getInitials = (name?: string | null) => {
-  if (!name) return "U";
-  return name
-    .split(" ")
-    .map((n) => n[0])
-    .join("")
-    .toUpperCase()
-    .slice(0, 2);
-};
+import { DropdownMenuAvatar } from "@/components/shared/UserDropDown";
 
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
   const user = await getSession()
-      
+
   return (
     <SidebarProvider>
       <DashboardSidebar/>
@@ -32,17 +22,7 @@ export default async function DashboardLayout({ children }: { children: React.Re
           </div>
 
           {user && (
-            <div className="flex items-center gap-2.5 bg-gray-50/80 border border-gray-100 py-1 pl-3 pr-1 rounded-full">
-              <span className="text-xs font-bold text-gray-700 truncate max-w-[120px]">
-                {user.name}
-              </span>
-              <Avatar className="h-7 w-7 border border-white shadow-sm shrink-0">
-                <AvatarImage src={user.image || undefined} alt={user.name} />
-                <AvatarFallback className="text-[10px] font-bold bg-teal-50 text-[#14B8A6]">
-                  {getInitials(user.name)}
-                </AvatarFallback>
-              </Avatar>
-            </div>
+            <DropdownMenuAvatar user={user} />
           )}
         </header>
 

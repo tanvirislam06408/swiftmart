@@ -163,19 +163,7 @@ export default async function AdminDashboard() {
               <ArrowRight size={16} className="text-gray-300 group-hover:text-purple-600 group-hover:translate-x-1 transition-all" />
             </Link>
 
-            <Link
-              href="/dashboard/admin/payments"
-              className="card-base card-hover p-5 flex items-center gap-4 border border-gray-100 hover:border-teal-500/20 group"
-            >
-              <div className="p-3 rounded-xl bg-orange-50 text-orange-600 group-hover:bg-orange-650 group-hover:text-white transition-colors duration-300">
-                <CreditCard size={22} />
-              </div>
-              <div className="flex-1 text-left">
-                <h4 className="font-semibold text-gray-800 text-sm">Payment History</h4>
-                <p className="text-xs text-gray-400">Review platform receipts</p>
-              </div>
-              <ArrowRight size={16} className="text-gray-300 group-hover:text-orange-650 group-hover:translate-x-1 transition-all" />
-            </Link>
+           
           </div>
         </div>
 
