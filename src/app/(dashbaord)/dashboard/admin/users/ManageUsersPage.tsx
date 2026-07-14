@@ -15,12 +15,13 @@ import {
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types/user";
+import { deleteUsers } from "@/lib/actions/deleteUser";
 
 
 
 
-export default function ManageUsersPage({ users: initial }: User) {
-    const [users, setUsers] = useState<User[]>(initial);
+export default function ManageUsersPage({ users }: User) {
+  
     const [searchQuery, setSearchQuery] = useState("");
 
     // Undo/Toast state
@@ -54,13 +55,16 @@ export default function ManageUsersPage({ users: initial }: User) {
         }));
     };
 
-    const handleDeleteUser = (id: string) => {
-        const userToDelete = users.find(user => user.id === id);
-        if (!userToDelete) return;
+    const handleDeleteUser = async(id: string) => {
+       const result=await deleteUsers(id);
+       if(result.deletedCount > 0){
 
-        setLastAction({ type: "delete", user: userToDelete });
-        setUsers(prev => prev.filter(user => user.id !== id));
-        showToast(`User '${userToDelete.name}' has been removed.`);
+           showToast(`User  has been removed.`);
+       }
+       else{
+        showToast(`Something wrong !!`);
+       }
+       
     };
 
     const handleUndo = () => {
@@ -207,7 +211,7 @@ export default function ManageUsersPage({ users: initial }: User) {
                                                     </button>
                                                 )}
                                                 <button
-                                                    onClick={() => handleDeleteUser(user.id)}
+                                                    onClick={() => handleDeleteUser(user._id)}
                                                     className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-xl border border-transparent hover:border-red-100 transition cursor-pointer"
                                                     title="Delete User"
                                                 >
