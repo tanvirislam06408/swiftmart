@@ -29,7 +29,7 @@ export default function AddProductPage() {
     category: "Women",
     availableDate: "2026-09-01",
     featured: false,
-    image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
+    image: ""
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -71,25 +71,23 @@ export default function AddProductPage() {
     if (!validate()) return;
 
     setIsSubmitting(true);
-    
 
-
-    
-    // Simulate API request delay
-    setTimeout(async() => {
-      setIsSubmitting(false);
-      setIsSuccess(true);
+    try {
       const newProduct = {
-      
         ...formData,
         price: Number(formData.price),
         rating: Number(formData.rating),
       };
-      const addProductToDatabase=await addProduct(newProduct)
-      console.log(addProductToDatabase);
+      const result = await addProduct(newProduct);
+      console.log(result);
       
-      // setCreatedProduct(newProduct);
-    }, 1200);
+      setCreatedProduct(result);
+      setIsSuccess(true);
+    } catch (error) {
+      console.error("Failed to add product:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
@@ -104,7 +102,7 @@ export default function AddProductPage() {
       category: "Women",
       availableDate: "2026-09-01",
       featured: false,
-      image: "https://images.unsplash.com/photo-1483985988355-763728e1935b?w=800&q=80"
+      image: ""
     });
     setErrors({});
     setIsSuccess(false);
@@ -394,7 +392,7 @@ export default function AddProductPage() {
                   placeholder="https://unsplash.com/..."
                   className={`w-full rounded-xl border ${errors.image ? "border-red-400 bg-red-50/10" : "border-gray-200"} px-4 py-3 text-sm outline-none transition-all duration-200 focus:border-[#14B8A6] focus:ring-2 focus:ring-[#14B8A6]/10`}
                 />
-                {errors.image && <p className="text-xs text-red-500 font-medium">{errors.image}</p>}
+                
               </div>
 
               {/* Preview image */}
@@ -405,9 +403,7 @@ export default function AddProductPage() {
                     src={formData.image} 
                     alt="Preview"
                     className="h-full w-full object-cover animate-in fade-in duration-300"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = "https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=800&q=80";
-                    }}
+                    
                   />
                 ) : (
                   <div className="text-center p-6 space-y-2 text-gray-400">

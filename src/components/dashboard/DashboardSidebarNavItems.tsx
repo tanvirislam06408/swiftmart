@@ -54,16 +54,17 @@ export function DashboardSidebarNavItems({ items }: DashboardSidebarNavItemsProp
 
     return (
       <SidebarMenuItem key={item.name}>
-        <SidebarMenuButton tooltip={item.name}>
-          <Link
-            href={item.path}
-            onClick={() => setOpenMobile(false)}
-            className="max-md:h-12 flex items-center gap-3 max-md:text-base max-md:[&>svg]:size-5"
-          >
+        <Link
+          href={item.path}
+          onClick={() => setOpenMobile(false)}
+          className="max-md:h-12 flex items-center gap-3 max-md:text-base max-md:[&>svg]:size-5"
+        >
+          <SidebarMenuButton tooltip={item.name}>
+
             <Icon />
             <span>{item.name}</span>
-          </Link>
-        </SidebarMenuButton>
+          </SidebarMenuButton>
+        </Link>
       </SidebarMenuItem>
     );
   });

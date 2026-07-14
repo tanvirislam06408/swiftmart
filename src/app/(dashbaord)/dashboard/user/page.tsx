@@ -1,4 +1,3 @@
-"use client";
 
 import React from "react";
 import { authClient } from "@/lib/auth-client";
@@ -15,26 +14,23 @@ import {
   CheckCircle2,
   Calendar
 } from "lucide-react";
+import { getSession } from "@/lib/core/session";
+import { serverFetch } from "@/lib/core/server";
 
-export default function UserDashboard() {
-  const { data: session, isPending } = authClient.useSession();
+export default async function UserDashboard() {
 
-  if (isPending) {
-    return (
-      <div className="w-full min-h-[80vh] flex flex-col items-center justify-center p-8 space-y-4">
-        <div className="h-12 w-12 rounded-full border-4 border-[#14B8A6]/20 border-t-[#14B8A6] animate-spin" />
-        <p className="text-gray-500 font-medium animate-pulse">Loading your dashboard...</p>
-      </div>
-    );
-  }
+  const session=await getSession();
 
-  const user = session?.user;
+  const getUserStats=await serverFetch(`/get-user-data/${session?.id}`)
+
+
+  const user = session;
 
   // Mock dashboard statistics
   const stats = [
     {
-      title: "My Listed Products",
-      value: "4 Active",
+      title: " Listed Orders",
+      value: getUserStats?.totalOrders,
       description: "Manage tours & experiences",
       icon: Package,
       color: "from-teal-500 to-emerald-600",
@@ -42,7 +38,7 @@ export default function UserDashboard() {
     },
     {
       title: "Items in Cart",
-      value: "2 Items",
+      value: getUserStats?.totalCartItems,
       description: "Ready for booking checkout",
       icon: ShoppingCart,
       color: "from-[#0E1F2B] to-[#1a3a50]",
@@ -50,49 +46,16 @@ export default function UserDashboard() {
     },
     {
       title: "Wallet / Spent",
-      value: "$1,649.00",
+      value: getUserStats?.totalSpent,
       description: "Total experience bookings",
       icon: TrendingUp,
       color: "from-blue-500 to-indigo-600",
       href: "/dashboard/user/orders"
     },
-    {
-      title: "Profile Strength",
-      value: "85%",
-      description: "Keep details updated",
-      icon: User,
-      color: "from-amber-500 to-orange-600",
-      href: "/dashboard/user/profile"
-    }
+   
   ];
 
-  // Mock recent activity log
-  const recentActivities = [
-    {
-      id: 1,
-      type: "create",
-      title: "Listed Parisian Haute Couture Walk",
-      time: "2 hours ago",
-      status: "Active",
-      statusColor: "bg-emerald-50 text-emerald-700 border-emerald-200"
-    },
-    {
-      id: 2,
-      type: "cart",
-      title: "Added London Savile Row Masterclass to Cart",
-      time: "Yesterday",
-      status: "In Cart",
-      statusColor: "bg-blue-50 text-blue-700 border-blue-200"
-    },
-    {
-      id: 3,
-      type: "update",
-      title: "Updated profile photo & location info",
-      time: "3 days ago",
-      status: "Completed",
-      statusColor: "bg-gray-50 text-gray-700 border-gray-200"
-    }
-  ];
+
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">
@@ -151,33 +114,9 @@ export default function UserDashboard() {
           </div>
           
           <div className="flex flex-col gap-4">
-            <Link 
-              href="/dashboard/user/add-product"
-              className="card-base card-hover p-5 flex items-center gap-4 border border-gray-100 hover:border-teal-500/20 group"
-            >
-              <div className="p-3 rounded-xl bg-teal-50 text-[#14B8A6] group-hover:bg-[#14B8A6] group-hover:text-white transition-colors duration-300">
-                <PlusCircle size={22} />
-              </div>
-              <div className="flex-1 text-left">
-                <h4 className="font-semibold text-gray-800 text-sm">Add New Product</h4>
-                <p className="text-xs text-gray-400">List a new experience or tour</p>
-              </div>
-              <ArrowRight size={16} className="text-gray-300 group-hover:text-[#14B8A6] group-hover:translate-x-1 transition-all" />
-            </Link>
+            
 
-            <Link 
-              href="/dashboard/user/products"
-              className="card-base card-hover p-5 flex items-center gap-4 border border-gray-100 hover:border-teal-500/20 group"
-            >
-              <div className="p-3 rounded-xl bg-indigo-50 text-indigo-600 group-hover:bg-indigo-600 group-hover:text-white transition-colors duration-300">
-                <Package size={22} />
-              </div>
-              <div className="flex-1 text-left">
-                <h4 className="font-semibold text-gray-800 text-sm">Manage My Products</h4>
-                <p className="text-xs text-gray-400">View, edit, or delete items</p>
-              </div>
-              <ArrowRight size={16} className="text-gray-300 group-hover:text-indigo-600 group-hover:translate-x-1 transition-all" />
-            </Link>
+           
 
             <Link 
               href="/dashboard/user/orders"
@@ -210,7 +149,7 @@ export default function UserDashboard() {
         </div>
 
         {/* Right Column: Recent Activities */}
-        <div className="lg:col-span-2 space-y-6">
+        {/* <div className="lg:col-span-2 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-gray-900">Recent Activity</h2>
             <button className="text-xs font-semibold text-[#14B8A6] hover:underline flex items-center gap-1">
@@ -245,7 +184,7 @@ export default function UserDashboard() {
               </div>
             ))}
           </div>
-        </div>
+        </div> */}
         
       </div>
     </div>

@@ -29,16 +29,7 @@ const navItems = {
       path: "/dashboard/user",
       icon: "LayoutDashboard",
     },
-    {
-      name: "Add Product",
-      path: "/dashboard/user/add-product",
-      icon: "PlusCircle",
-    },
-    {
-      name: "My Products",
-      path: "/dashboard/user/products",
-      icon: "Package",
-    },
+    
     {
       name: "Cart",
       path: "/dashboard/user/orders",
@@ -57,6 +48,16 @@ const navItems = {
       name: "Dashboard",
       path: "/dashboard/admin",
       icon: "LayoutDashboard",
+    },
+    {
+      name: "Add Product",
+      path: "/dashboard/user/add-product",
+      icon: "PlusCircle",
+    },
+    {
+      name: "My Products",
+      path: "/dashboard/user/products",
+      icon: "Package",
     },
     {
       name: "Manage Users",
