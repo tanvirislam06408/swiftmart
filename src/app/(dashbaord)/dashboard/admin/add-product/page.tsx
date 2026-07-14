@@ -81,7 +81,7 @@ export default function AddProductPage() {
       const result = await addProduct(newProduct);
       console.log(result);
       
-      setCreatedProduct(result);
+      setCreatedProduct(newProduct);
       setIsSuccess(true);
     } catch (error) {
       console.error("Failed to add product:", error);
@@ -174,7 +174,7 @@ export default function AddProductPage() {
               Add Another Product
             </button>
             <Link 
-              href="/dashboard/user/products"
+              href="/dashboard/admin/products"
               className="btn-outline w-full sm:w-auto flex items-center justify-center gap-2"
             >
               <ShoppingBag size={16} /> View My Products

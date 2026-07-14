@@ -29,13 +29,13 @@ const navItems = {
       path: "/dashboard/user",
       icon: "LayoutDashboard",
     },
-    
+
     {
       name: "Cart",
       path: "/dashboard/user/orders",
       icon: "ShoppingCart",
     },
-    
+
     {
       name: "Profile",
       path: "/dashboard/user/profile",
@@ -51,12 +51,12 @@ const navItems = {
     },
     {
       name: "Add Product",
-      path: "/dashboard/user/add-product",
+      path: "/dashboard/admin/add-product",
       icon: "PlusCircle",
     },
     {
-      name: "My Products",
-      path: "/dashboard/user/products",
+      name: "Manage Products",
+      path: "/dashboard/admin/products",
       icon: "Package",
     },
     {
@@ -64,18 +64,14 @@ const navItems = {
       path: "/dashboard/admin/users",
       icon: "Users",
     },
-    {
-      name: "Manage Products",
-      path: "/dashboard/admin/products",
-      icon: "Package",
-    },
-    
+
+
     {
       name: "Platform Analytics",
       path: "/dashboard/admin/analytics",
       icon: "BarChart3",
     },
-    
+
     {
       name: "Profile",
       path: "/dashboard/admin/profile",
@@ -95,7 +91,7 @@ export async function DashboardSidebar() {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <Logo/>
+        <Logo />
       </SidebarHeader>
 
       <SidebarContent>
