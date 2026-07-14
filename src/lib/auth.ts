@@ -32,6 +32,12 @@ export const auth = betterAuth({
         required: false,
         defaultValue: "user",
         input: false, // don't allow user to set role
+      },
+      status: {
+        type: ["active" , "blocked"],
+        required: false,
+        defaultValue: "active",
+        input: false, // don't allow user to set role
       }
     },
   },

@@ -20,7 +20,7 @@ import { User } from "@/types/user";
 
 
 export default function ManageUsersPage({ users: initial }: User) {
-    const [users, setUsers] = useState<PlatformUser[]>(initial);
+    const [users, setUsers] = useState<User[]>(initial);
     const [searchQuery, setSearchQuery] = useState("");
 
     // Undo/Toast state
@@ -119,7 +119,7 @@ export default function ManageUsersPage({ users: initial }: User) {
                 </div>
             </div>
 
-            {filteredUsers.length === 0 ? (
+            {users.length === 0 ? (
                 <div className="card-base p-12 text-center max-w-md mx-auto space-y-5">
                     <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-gray-50 text-gray-400">
                         <Users size={24} />
@@ -144,8 +144,8 @@ export default function ManageUsersPage({ users: initial }: User) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-gray-100 text-xs">
-                                {filteredUsers.map((user) => (
-                                    <tr key={user.id} className="hover:bg-gray-50/30 transition-colors duration-150">
+                                {users.map((user) => (
+                                    <tr key={user._id} className="hover:bg-gray-50/30 transition-colors duration-150">
                                         {/* User profile details */}
                                         <td className="py-4 px-6">
                                             <div className="flex items-center gap-3">
