@@ -2,10 +2,10 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
-import { 
-  ArrowLeft, 
-  Search, 
-  Trash2, 
+import {
+  ArrowLeft,
+  Search,
+  Trash2,
   RotateCcw,
   Check,
   Package,
@@ -18,6 +18,7 @@ import ProductsPagination from "@/components/shared/ProductsPagination";
 import AdminProductPagination from "@/components/dashboard/AdminProductPagination";
 import { deleteProduct } from "@/lib/actions/deleteProduct";
 import toast from "react-hot-toast";
+import { DeleteConfirmDialog } from "@/components/shared/DeleteConfirmDialog";
 
 interface AdminProduct {
   _id: string;
@@ -51,13 +52,11 @@ export default function ManageProductsPage({productData}) {
   };
 
   const handleDeleteProduct = async(id: string) => {
-  
-    
-     const res=await deleteProduct(id);
-     if(res.deletedCount > 0){
-      toast.success("Product deleted")
-     }
-     
+    const res = await deleteProduct(id);
+    if(res.deletedCount > 0){
+      setProducts((prev) => prev.filter((p) => p._id !== id));
+      toast.success("Product deleted");
+    }
   };
 
 
@@ -194,13 +193,11 @@ export default function ManageProductsPage({productData}) {
 
                     {/* Actions */}
                     <td className="py-4 px-6 text-right">
-                      <button
-                        onClick={() => handleDeleteProduct(product._id)}
-                        className="inline-flex items-center gap-1 px-3 py-1.5 rounded-xl border border-red-200 text-[10px] font-bold text-red-600 hover:bg-red-50 transition cursor-pointer"
-                        title="Delete Product"
-                      >
-                        <Trash2 size={12} /> Delete
-                      </button>
+                      <DeleteConfirmDialog
+                        onConfirm={() => handleDeleteProduct(product._id)}
+                        title={`Delete "${product.title}"?`}
+                        description="This will permanently delete this product from the platform. This action cannot be undone."
+                      />
                     </td>
                   </tr>
                 ))}
