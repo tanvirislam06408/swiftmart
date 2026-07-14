@@ -16,6 +16,8 @@ import {
 import { Product } from "@/types/product";
 import ProductsPagination from "@/components/shared/ProductsPagination";
 import AdminProductPagination from "@/components/dashboard/AdminProductPagination";
+import { deleteProduct } from "@/lib/actions/deleteProduct";
+import toast from "react-hot-toast";
 
 interface AdminProduct {
   _id: string;
@@ -31,7 +33,7 @@ interface AdminProduct {
 
 
 export default function ManageProductsPage({productData}) {
-    console.log(productData);
+    
     const {products:productArr,currentPage,totalPages}=productData;
     
   const [products, setProducts] = useState<AdminProduct[]>(productArr);
@@ -48,22 +50,17 @@ export default function ManageProductsPage({productData}) {
     }, 3000);
   };
 
-  const handleDeleteProduct = (id: string) => {
-    const productToDelete = products.find(p => p._id === id);
-    if (!productToDelete) return;
-
-    setLastAction({ type: "delete", product: productToDelete });
-    setProducts(prev => prev.filter(p => p._id !== id));
-    showToast(`Product '${productToDelete.title}' has been removed from catalog.`);
+  const handleDeleteProduct = async(id: string) => {
+  
+    
+     const res=await deleteProduct(id);
+     if(res.deletedCount > 0){
+      toast.success("Product deleted")
+     }
+     
   };
 
-  const handleUndo = () => {
-    if (lastAction && lastAction.type === "delete") {
-      setProducts(prev => [...prev, lastAction.product]);
-      setLastAction(null);
-      showToast("Product deletion undone.");
-    }
-  };
+
 
   const filteredProducts = products.filter(product => 
     product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -81,14 +78,7 @@ export default function ManageProductsPage({productData}) {
             <Check size={12} strokeWidth={3} />
           </div>
           <span className="font-medium">{toastMessage}</span>
-          {lastAction && (
-            <button 
-              onClick={handleUndo}
-              className="ml-2 flex items-center gap-1 text-xs font-bold text-teal-300 hover:text-teal-200 cursor-pointer"
-            >
-              <RotateCcw size={12} /> Undo
-            </button>
-          )}
+          
         </div>
       )}
 

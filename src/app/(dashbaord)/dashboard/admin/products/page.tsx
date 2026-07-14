@@ -3,9 +3,9 @@ import React from 'react';
 import ManageProductsPage from './ManageProductsPage';
 
 const ManageProducts = async({ searchParams }: PageProps) => {
-  const productData=await serverFetch('/products');
   const {page}=await searchParams
   console.log('currnet',page);
+  const productData=await serverFetch(`/products?page=${page}`);
   
 
   return (
