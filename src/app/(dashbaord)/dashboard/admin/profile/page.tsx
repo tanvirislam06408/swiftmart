@@ -233,16 +233,7 @@ export default function AdminProfilePage() {
             >
               <Lock size={16} /> Password & Security
             </button>
-            <button
-              onClick={() => setActiveTab("preferences")}
-              className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-xs font-bold text-left transition cursor-pointer ${
-                activeTab === "preferences" 
-                  ? "bg-teal-50 text-[#14B8A6] border border-teal-500/10" 
-                  : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
-              }`}
-            >
-              <Settings size={16} /> Preferences
-            </button>
+           
           </div>
         </div>
 
@@ -280,6 +271,7 @@ export default function AdminProfilePage() {
                       <input
                         type="email"
                         required
+                        readOnly
                         value={profile.email}
                         onChange={(e) => setProfile(prev => ({ ...prev, email: e.target.value }))}
                         className="w-full rounded-xl border border-gray-200 pl-9 pr-4 py-2.5 text-sm outline-none focus:border-[#14B8A6]"
@@ -287,55 +279,7 @@ export default function AdminProfilePage() {
                     </div>
                   </div>
 
-                  {/* Phone */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase">Phone Number</label>
-                    <div className="relative">
-                      <Phone size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="text"
-                        value={profile.phone}
-                        onChange={(e) => setProfile(prev => ({ ...prev, phone: e.target.value }))}
-                        className="w-full rounded-xl border border-gray-200 pl-9 pr-4 py-2.5 text-sm outline-none focus:border-[#14B8A6]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Street Address */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase">Street Address</label>
-                    <div className="relative">
-                      <MapPin size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400" />
-                      <input
-                        type="text"
-                        value={profile.address}
-                        onChange={(e) => setProfile(prev => ({ ...prev, address: e.target.value }))}
-                        className="w-full rounded-xl border border-gray-200 pl-9 pr-4 py-2.5 text-sm outline-none focus:border-[#14B8A6]"
-                      />
-                    </div>
-                  </div>
-
-                  {/* City */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase">City</label>
-                    <input
-                      type="text"
-                      value={profile.city}
-                      onChange={(e) => setProfile(prev => ({ ...prev, city: e.target.value }))}
-                      className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#14B8A6]"
-                    />
-                  </div>
-
-                  {/* Country */}
-                  <div className="space-y-1">
-                    <label className="text-xs font-semibold text-gray-500 uppercase">Country</label>
-                    <input
-                      type="text"
-                      value={profile.country}
-                      onChange={(e) => setProfile(prev => ({ ...prev, country: e.target.value }))}
-                      className="w-full rounded-xl border border-gray-200 px-4 py-2.5 text-sm outline-none focus:border-[#14B8A6]"
-                    />
-                  </div>
+                   
                 </div>
 
                 <div className="pt-4 border-t border-gray-50 flex justify-end">
@@ -450,84 +394,7 @@ export default function AdminProfilePage() {
             </div>
           )}
 
-          {activeTab === "preferences" && (
-            <div className="card-base p-6 md:p-8 animate-in fade-in slide-in-from-bottom-2 duration-300">
-              <h2 className="text-lg font-bold text-gray-900 border-b border-gray-50 pb-3 flex items-center gap-2 mb-6">
-                <Settings size={18} className="text-[#14B8A6]" /> Account Preferences
-              </h2>
-
-              <form onSubmit={handlePreferencesSave} className="space-y-6">
-                
-                {/* Checkbox item 1: Email notifications */}
-                <div className="flex items-start justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="space-y-0.5 max-w-[80%]">
-                    <h4 className="text-sm font-bold text-gray-800">Marketing Promotions</h4>
-                    <p className="text-[10px] text-gray-400">Receive emails about new fashion tour experiences, collections, and discounts.</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.emailPromo}
-                      onChange={() => handlePreferenceChange("emailPromo")}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#14B8A6]"></div>
-                  </label>
-                </div>
-
-                {/* Checkbox item 2: SMS alerts */}
-                <div className="flex items-start justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="space-y-0.5 max-w-[80%]">
-                    <h4 className="text-sm font-bold text-gray-800">SMS Booking Alerts</h4>
-                    <p className="text-[10px] text-gray-400">Receive real-time reservation reminders and updates directly on your phone.</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.smsAlerts}
-                      onChange={() => handlePreferenceChange("smsAlerts")}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#14B8A6]"></div>
-                  </label>
-                </div>
-
-                {/* Checkbox item 3: Two Factor Auth */}
-                <div className="flex items-start justify-between p-4 bg-gray-50 rounded-2xl border border-gray-100">
-                  <div className="space-y-0.5 max-w-[80%]">
-                    <h4 className="text-sm font-bold text-gray-800">Multi-Factor Authentication (MFA)</h4>
-                    <p className="text-[10px] text-gray-400">Enhance your dashboard security by requiring validation codes on login.</p>
-                  </div>
-                  <label className="relative inline-flex items-center cursor-pointer">
-                    <input
-                      type="checkbox"
-                      checked={preferences.mfa}
-                      onChange={() => handlePreferenceChange("mfa")}
-                      className="sr-only peer"
-                    />
-                    <div className="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-[#14B8A6]"></div>
-                  </label>
-                </div>
-
-                <div className="pt-4 border-t border-gray-50 flex justify-end">
-                  <button
-                    type="submit"
-                    disabled={isSaving}
-                    className="btn-primary flex items-center gap-2 cursor-pointer"
-                  >
-                    {isSaving ? (
-                      <>
-                        <div className="h-4 w-4 rounded-full border-2 border-white/20 border-t-white animate-spin" />
-                        Saving...
-                      </>
-                    ) : (
-                      "Save Preferences"
-                    )}
-                  </button>
-                </div>
-              </form>
-            </div>
-          )}
+          
 
         </div>
       </div>
