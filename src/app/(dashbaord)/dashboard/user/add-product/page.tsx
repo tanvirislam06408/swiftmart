@@ -15,6 +15,7 @@ import {
   CheckCircle,
   ShoppingBag
 } from "lucide-react";
+import { addProduct } from "@/lib/actions/add-product";
 
 export default function AddProductPage() {
   const [formData, setFormData] = useState({
@@ -65,23 +66,29 @@ export default function AddProductPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async(e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setIsSubmitting(true);
     
+
+
+    
     // Simulate API request delay
-    setTimeout(() => {
+    setTimeout(async() => {
       setIsSubmitting(false);
       setIsSuccess(true);
       const newProduct = {
-        _id: Math.random().toString(36).substring(2, 11),
+      
         ...formData,
         price: Number(formData.price),
         rating: Number(formData.rating),
       };
-      setCreatedProduct(newProduct);
+      const addProductToDatabase=await addProduct(newProduct)
+      console.log(addProductToDatabase);
+      
+      // setCreatedProduct(newProduct);
     }, 1200);
   };
 

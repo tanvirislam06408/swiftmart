@@ -3,9 +3,9 @@ import { redirect } from "next/navigation";
 import { getSession } from "./session";
 
 const baseUrl = process.env.NEXT_PUBLIC_SERVER
+// Record<string, unknown> | null
 
-
-export const serverMutation = async (url: string, data: Record<string, unknown> | null = null, method: string = 'POST') => {
+export const serverMutation = async (url: string, data: object | null = null, method: string = 'POST') => {
     const user = await getSession();
     if (!user) {
         redirect('/login')
