@@ -2,7 +2,7 @@
 
 import { FormEvent, useState } from "react";
 import { signIn } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 
 const LoginPage = () => {
@@ -10,6 +10,8 @@ const LoginPage = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirect") || "/";
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ const LoginPage = () => {
       onSuccess: () => {
         setLoading(false);
         form.reset();
-        router.push("/");
+        router.push(redirectTo);
       },
       onError: (ctx) => {
         setLoading(false);
@@ -41,14 +43,14 @@ const LoginPage = () => {
     setError("");
     await signIn.social({
       provider: "google",
-      callbackURL: "/",
+      callbackURL: redirectTo,
     }, {
       onRequest: () => {
         setLoading(true);
       },
       onSuccess: () => {
         setLoading(false);
-        router.push("/");
+        router.push(redirectTo);
       },
       onError: (ctx) => {
         setLoading(false);
