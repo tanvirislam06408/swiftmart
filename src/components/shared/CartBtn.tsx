@@ -19,6 +19,11 @@ const CartBtn = ({ product, user }: CartBtnProps) => {
             return;
         }
 
+        if (!_id) {
+            toast.error("Product not available");
+            return;
+        }
+
         const pData = {
             userId: user.id,
             productId: _id,

@@ -123,7 +123,7 @@ export default function AdminAnalyticsCharts({
                   border: '1px solid #e5e7eb',
                   borderRadius: '8px',
                 }}
-                formatter={(value: number) => [`$${value}`, 'Revenue']}
+                formatter={(value) => [`$${value}`, 'Revenue']}
               />
               <Area
                 type="monotone"

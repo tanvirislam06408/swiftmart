@@ -13,9 +13,13 @@ import {
     AlertTriangle
 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { User } from "@/types/user";
+import { AdminUser } from "@/types/user";
 import { deleteUsers } from "@/lib/actions/deleteUser";
 import { updateUserStatus } from "@/lib/actions/updateUserStatus";
+
+interface ManageUsersPageProps {
+    users: AdminUser[];
+}
 import {
     AlertDialog,
     AlertDialogAction,
@@ -28,7 +32,7 @@ import {
     AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 
-export default function ManageUsersPage({ users }: User) {
+export default function ManageUsersPage({ users }: ManageUsersPageProps) {
     const [searchQuery, setSearchQuery] = useState("");
     const [toastMessage, setToastMessage] = useState<string | null>(null);
     const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
@@ -139,7 +143,7 @@ export default function ManageUsersPage({ users }: User) {
                                         <td className="py-4 px-6">
                                             <div className="flex items-center gap-3">
                                                 <Avatar className="h-9 w-9 border border-gray-100 shadow-sm shrink-0">
-                                                    <AvatarImage src={user.image} alt={user.name} />
+                                                    <AvatarImage src={user.image ?? undefined} alt={user.name} />
                                                     <AvatarFallback className="text-[11px] font-bold bg-teal-50 text-[#14B8A6]">
                                                         {user.name.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2)}
                                                     </AvatarFallback>

@@ -70,12 +70,6 @@ export default function CartOrdersPage({ cartP : cart , user }: { cartP: CartIte
 
 
 
-  const handleRemove = (id: string) => {
-    setCart(prev => prev.filter(item => item._id !== id));
-  };
-
-
-
   const handleFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const field = name as keyof BillingDetails;
@@ -143,7 +137,6 @@ export default function CartOrdersPage({ cartP : cart , user }: { cartP: CartIte
 
 
   const handleResetCart = () => {
-    setCart([]);
     setStep("cart");
     setDiscountPercent(0);
   };

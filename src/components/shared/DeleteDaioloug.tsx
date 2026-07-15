@@ -17,10 +17,10 @@ import { Button } from "@/components/ui/button"
 import { deleteFormCart } from "@/lib/actions/deleteFormCart"
 import toast from "react-hot-toast"
 
-export function AlertDialogDestructive({ itemId: id }) {
+export function AlertDialogDestructive({ itemId: id }: { itemId: string }) {
     console.log(id);
 
-    const hanldeDeleteProduct = async (id) => {
+    const hanldeDeleteProduct = async (id: string) => {
         const result = await deleteFormCart(id)
         if (result.deletedCount > 0) {
             toast.success("Product delete from cart successfully")

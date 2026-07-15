@@ -2,7 +2,7 @@
 import { revalidatePath } from "next/cache"
 import { serverMutation } from "../core/serverMutation"
 
-export const deleteFormCart = async (id) => {
+export const deleteFormCart = async (id: string) => {
     const data={
         id : id
     }

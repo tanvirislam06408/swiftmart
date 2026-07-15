@@ -32,8 +32,15 @@ interface AdminProduct {
   image: string;
 }
 
+interface ManageProductsPageProps {
+  productData: {
+    products: AdminProduct[];
+    currentPage: number;
+    totalPages: number;
+  };
+}
 
-export default function ManageProductsPage({productData}) {
+export default function ManageProductsPage({productData}: ManageProductsPageProps) {
     
     const {products:productArr,currentPage,totalPages}=productData;
     
