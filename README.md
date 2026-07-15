@@ -1,36 +1,143 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SwiftMart
+
+A modern, full-stack e-commerce platform built with Next.js 16, featuring a sleek storefront, role-based dashboards, and a powerful admin panel with real-time analytics.
+
+---
+
+## Features
+
+### Storefront
+- Hero slider with animated transitions
+- Featured products grid with product cards
+- Shop by category (Men, Women, Shoes, Bags, Accessories, Watches)
+- Full explore page with search, category filter, sort, and pagination
+- Product detail pages
+- Testimonials, brand logos, statistics counters, and FAQ section
+- Scroll-triggered animations with Framer Motion
+
+### Authentication & Authorization
+- Email/password registration and login
+- Google OAuth social login
+- JWT-based session management with 7-day cookie cache
+- Role-based access control (User / Admin)
+- User status management (Active / Blocked)
+
+### User Dashboard
+- Dashboard overview
+- Cart and order management
+- Profile settings
+
+### Admin Dashboard
+- Platform metrics overview (total users, products, orders, earnings)
+- Add new products
+- Manage product catalog with pagination
+- Manage user accounts (block, unblock, delete)
+- Platform analytics with interactive charts (bar, pie, area)
+- Profile settings
+
+---
+
+<!-- UI screenshots will be placed here -->
+
+---
+
+## Tech Stack
+
+| Category | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router) |
+| UI Library | React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS 4 |
+| Database | MongoDB |
+| Auth | Better Auth (Email + Google OAuth, JWT) |
+| UI Components | Shadcn UI, Radix primitives |
+| Charts | Recharts |
+| Animation | Framer Motion |
+| Carousel | Swiper |
+| Icons | Lucide React, React Icons |
+| Notifications | React Hot Toast |
+| Marquee | React Fast Marquee |
+| Counter | React Countup |
+| Utilities | clsx, tailwind-merge, class-variance-authority |
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- **Node.js** 18+ (recommended: 20+)
+- **MongoDB** instance (local or Atlas)
+- A **Google OAuth** client ID and secret (for social login)
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/your-username/swiftmart.git
+cd swiftmart
+```
+
+### 2. Install dependencies
+
+```bash
+npm install
+```
+
+### 3. Configure environment variables
+
+Create a `.env.local` file in the project root:
+
+```env
+MONGO_URI=mongodb://localhost:27017/database
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+NEXT_PUBLIC_API_URL=your-backend-api-url
+```
+
+### 4. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Other commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build    # Production build
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+src/
+├── app/
+│   ├── (auth)/            # Login & Register pages
+│   ├── (main)/            # Public storefront (home, explore, categories, about)
+│   ├── (dashbaord)/       # Dashboard layout (user & admin panels)
+│   └── api/auth/          # Better Auth API routes
+├── components/
+│   ├── home/              # Homepage sections (Featured, Categories, FAQ, etc.)
+│   ├── shared/            # Reusable components (Navbar, Footer, ProductCard, etc.)
+│   ├── dashboard/         # Dashboard-specific components (sidebar, charts)
+│   ├── slides/            # Hero slider slide layouts
+│   └── ui/                # Shadcn UI primitives
+├── lib/
+│   ├── actions/           # Server actions (add/delete/update)
+│   ├── api/               # API fetch helpers
+│   ├── core/              # Session, JWT, server fetch utilities
+│   └── auth.ts            # Better Auth server config
+└── types/                 # TypeScript interfaces
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+This project is private and not open source.
