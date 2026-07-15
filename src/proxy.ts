@@ -32,5 +32,5 @@ export async function proxy(request: NextRequest) {
 // export default function proxy(request: NextRequest) { ... }
 
 export const config = {
-    matcher: [ '/dashboard/admin/:path']
+    matcher: [ '/dashboard/admin/:path','/dashboard/admin']
 }
