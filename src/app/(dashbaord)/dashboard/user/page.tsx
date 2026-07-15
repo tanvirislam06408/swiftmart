@@ -15,13 +15,13 @@ import {
   Calendar
 } from "lucide-react";
 import { getSession } from "@/lib/core/session";
-import { serverFetch } from "@/lib/core/server";
+import { protectedFetch } from "@/lib/core/server";
 
 export default async function UserDashboard() {
 
   const session=await getSession();
 
-  const getUserStats=await serverFetch(`/get-user-data/${session?.id}`)
+  const getUserStats=await protectedFetch(`/get-user-data/${session?.id}`)
 
 
   const user = session;

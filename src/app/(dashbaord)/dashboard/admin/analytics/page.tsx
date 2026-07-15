@@ -2,11 +2,11 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowLeft, BarChart3 } from "lucide-react";
-import { serverFetch } from "@/lib/core/server";
+import { protectedFetch, serverFetch } from "@/lib/core/server";
 import AdminAnalyticsCharts from "@/components/dashboard/AdminAnalyticsCharts";
 
 export default async function AdminAnalyticsPage() {
-  const getAdminInfo = await serverFetch(`/get-admin-infos`);
+  const getAdminInfo = await protectedFetch(`/get-admin-infos`);
 
   return (
     <div className="w-full max-w-7xl mx-auto px-4 md:px-8 py-6 md:py-10 space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-300">

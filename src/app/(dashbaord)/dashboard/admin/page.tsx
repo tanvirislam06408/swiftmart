@@ -16,13 +16,13 @@ import {
   BarChart3,
   CreditCard
 } from "lucide-react";
-import { serverFetch } from "@/lib/core/server";
+import { protectedFetch, serverFetch } from "@/lib/core/server";
 import { getSession } from "@/lib/core/session";
 
 export default async function AdminDashboard() {
 
   const user = await getSession();
-  const getAdminInfo = await serverFetch(`/get-admin-infos`);
+  const getAdminInfo = await protectedFetch(`/get-admin-infos`);
 
 
 
